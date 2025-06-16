@@ -1,4 +1,4 @@
-package com.wzg.train.member.acpect;
+package com.wzg.train.common.aspect;
 
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;
