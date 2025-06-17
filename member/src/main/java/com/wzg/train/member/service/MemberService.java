@@ -1,6 +1,8 @@
 package com.wzg.train.member.service;
 
 import cn.hutool.core.collection.CollUtil;
+import com.wzg.train.common.exception.BusinessException;
+import com.wzg.train.common.exception.BusinessExceptionEnum;
 import com.wzg.train.member.domain.Member;
 import com.wzg.train.member.domain.MemberExample;
 import com.wzg.train.member.mapper.MemberMapper;
@@ -28,7 +30,7 @@ public class MemberService {
 
         if (CollUtil.isNotEmpty(list)){
             //return list.get(0).getId();
-            throw new RuntimeException("用户手机号已注册");
+            throw new BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_EXIST);
         }
         Member member = new Member();
         member.setId(System.currentTimeMillis());
