@@ -11,9 +11,11 @@ mobile=43523523
 ###
 
 POST http://localhost:8000/member/member/send-code
-Content-Type: application/x-www-form-urlencoded
+Content-Type: application/json
 
-mobile=18894307017
+{
+  "mobile": "13000000000"
+}
 
 ###
 
