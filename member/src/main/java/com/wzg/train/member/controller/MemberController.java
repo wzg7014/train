@@ -1,8 +1,10 @@
 package com.wzg.train.member.controller;
 
 import com.wzg.train.common.resp.CommonResp;
+import com.wzg.train.member.req.MemberLoginReq;
 import com.wzg.train.member.req.MemberRegisterReq;
 import com.wzg.train.member.req.MemberSendCodeReq;
+import com.wzg.train.member.resp.MemberLoginResp;
 import com.wzg.train.member.service.MemberService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -40,4 +42,12 @@ public class MemberController {
         memberService.sendCode(req);
         return new CommonResp<>();
     }
+
+    @PostMapping("/login")
+    public CommonResp<MemberLoginResp> sendCode(@Valid MemberLoginReq req) {
+        MemberLoginResp resp = memberService.login(req);
+        return new CommonResp<>(resp);
+    }
+
+
 }
