@@ -3,9 +3,9 @@ package com.wzg.train.member.service;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.jwt.JWTUtil;
 import com.wzg.train.common.exception.BusinessException;
 import com.wzg.train.common.exception.BusinessExceptionEnum;
+import com.wzg.train.common.utils.JwtUtil;
 import com.wzg.train.common.utils.SnowUtil;
 import com.wzg.train.member.domain.Member;
 import com.wzg.train.member.domain.MemberExample;
@@ -95,8 +95,7 @@ public class MemberService {
 
          MemberLoginResp memberLoginResp = BeanUtil.copyProperties(memberDB, MemberLoginResp.class);
          Map<String, Object> map = BeanUtil.beanToMap(memberLoginResp);
-         String key = "wzg12306";
-         String token = JWTUtil.createToken(map, key.getBytes());
+         String token = JwtUtil.createToken(memberLoginResp.getId(), memberLoginResp.getMobile());
          memberLoginResp.setToken(token);
          return memberLoginResp;
 
