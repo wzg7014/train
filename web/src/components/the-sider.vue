@@ -2,7 +2,7 @@
   <a-layout-sider width="200" style="background: #fff">
     <a-menu
         mode="inline"
-        v-model:selectedKeys="selectedKeys2"
+        v-model:selectedKeys="selectedKeys"
         v-model:openKeys="openKeys"
         :style="{ height: '100%', borderRight: 0 }"
     >
@@ -21,23 +21,28 @@
 </template>
 
 <script>
-import {defineComponent, ref} from 'vue';
+import {defineComponent, ref, watch} from 'vue';
+import router from "@/router";
 
 export default defineComponent({
   name: "the-sider-view",
   setup() {
+    const selectedKeys = ref([]);
 
-    return{
-      selectedKeys2: ref(['1']),
-      openKeys: ref(['sub1']),
-    };
+    watch(() => router.currentRoute.value.path, (newValue) => {
+      console.log('watch', newValue);
+      selectedKeys.value = [];
+      selectedKeys.value.push(newValue);
+    }, {immediate: true});
+    return {
+      selectedKeys
+    }
   },
 });
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style >
 
 
 </style>
