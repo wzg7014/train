@@ -4,7 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wzg.train.common.context.LoginMemberContext;
+import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.common.utils.SnowUtil;
 import com.wzg.train.member.domain.Passenger;
 import com.wzg.train.member.domain.PassengerExample;
@@ -13,12 +15,16 @@ import com.wzg.train.member.req.PassengerQueryReq;
 import com.wzg.train.member.req.PassengerSaveReq;
 import com.wzg.train.member.resp.PassengerQuaryResp;
 import jakarta.annotation.Resource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class PassengerService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(PassengerService.class);
 
     @Resource
     private PassengerMapper passengerMapper;
@@ -33,15 +39,28 @@ public class PassengerService {
         passengerMapper.insert(passenger);
     }
 
-    public List<PassengerQuaryResp> queryList(PassengerQueryReq req){
+    public PageResp<PassengerQuaryResp> queryList(PassengerQueryReq req){
         PassengerExample passengerExample = new PassengerExample();
         PassengerExample.Criteria criteria = passengerExample.createCriteria();
         if (ObjectUtil.isNotEmpty(req.getMemberId())){
             criteria.andMemberIdEqualTo(req.getMemberId());
         }
+
+        LOG.info("查询页码：{}", req.getPage());
+        LOG.info("每页条数：{}", req.getSize());
         PageHelper.startPage(req.getPage(), req.getSize());
         List<Passenger> passengers = passengerMapper.selectByExample(passengerExample);
-        return BeanUtil.copyToList(passengers, PassengerQuaryResp.class);
+
+        PageInfo<Passenger> pageInfo = new PageInfo<>(passengers);
+        LOG.info("总行数：{}", pageInfo.getTotal());
+        LOG.info("总页数：{}", pageInfo.getPages());
+
+        List<PassengerQuaryResp> list = BeanUtil.copyToList(passengers, PassengerQuaryResp.class);
+
+        PageResp<PassengerQuaryResp> pageResp = new PageResp<>();
+        pageResp.setTotal(pageInfo.getTotal());
+        pageResp.setList(list);
+        return pageResp;
     }
 
 }
