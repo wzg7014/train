@@ -30,7 +30,7 @@
 
     </a-form>
   </a-modal>
-</template>
+</template> 
 
 <script>
 import {defineComponent, onMounted, reactive, ref} from 'vue';
