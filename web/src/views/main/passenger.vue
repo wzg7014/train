@@ -36,9 +36,9 @@
       </a-form-item>
       <a-form-item label="类型">
         <a-select v-model:value="passenger.type">
-          <a-select-option value="1">成人</a-select-option>
-          <a-select-option value="2">儿童</a-select-option>
-          <a-select-option value="3">学生</a-select-option>
+          <a-select-option v-for="item in PASSENGER_TYPE_ARRAY" :key="item.code" :value="item.code">
+            {{item.desc}}
+          </a-select-option>
         </a-select>
       </a-form-item>
 
@@ -53,7 +53,8 @@ import axios from "axios";
 
 export default defineComponent({
   setup() {
-      const visible = ref(false);
+    const PASSENGER_TYPE_ARRAY = [{key: "1", value: "成人"}, {key: "2", value: "儿童"}, {key: "3", value: "学生"}];
+    const visible = ref(false);
       const passenger = ref({
         id: undefined,
         memberId: undefined,
@@ -178,6 +179,7 @@ export default defineComponent({
       });
     });
     return {
+      PASSENGER_TYPE_ARRAY,
       visible,
       passenger,
       onAdd,
