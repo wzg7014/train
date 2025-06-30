@@ -1,4 +1,4 @@
-package com.wzg.train.generator.server;
+package com.wzg.train.generator.gen;
 
 
 import com.wzg.train.generator.utils.DbUtil;
