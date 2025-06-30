@@ -13,7 +13,7 @@ import com.wzg.train.member.domain.PassengerExample;
 import com.wzg.train.member.mapper.PassengerMapper;
 import com.wzg.train.member.req.PassengerQueryReq;
 import com.wzg.train.member.req.PassengerSaveReq;
-import com.wzg.train.member.resp.PassengerQuaryResp;
+import com.wzg.train.member.resp.PassengerQueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class PassengerService {
 
     }
 
-    public PageResp<PassengerQuaryResp> queryList(PassengerQueryReq req){
+    public PageResp<PassengerQueryResp> queryList(PassengerQueryReq req){
         PassengerExample passengerExample = new PassengerExample();
         passengerExample.setOrderByClause("id desc");
         PassengerExample.Criteria criteria = passengerExample.createCriteria();
@@ -62,9 +62,9 @@ public class PassengerService {
         LOG.info("总行数：{}", pageInfo.getTotal());
         LOG.info("总页数：{}", pageInfo.getPages());
 
-        List<PassengerQuaryResp> list = BeanUtil.copyToList(passengers, PassengerQuaryResp.class);
+        List<PassengerQueryResp> list = BeanUtil.copyToList(passengers, PassengerQueryResp.class);
 
-        PageResp<PassengerQuaryResp> pageResp = new PageResp<>();
+        PageResp<PassengerQueryResp> pageResp = new PageResp<>();
         pageResp.setTotal(pageInfo.getTotal());
         pageResp.setList(list);
         return pageResp;
