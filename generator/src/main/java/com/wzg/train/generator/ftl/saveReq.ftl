@@ -1,4 +1,4 @@
-package com.wzg.train.member.req;
+package com.wzg.train.${module}.req;
 
 <#list typeSet as type>
 <#if type=='Date'>
