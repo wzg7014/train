@@ -2,17 +2,16 @@
   <p>
     <a-space>
       <a-button type="primary" @click="handleQuery()">刷新</a-button>
-      <#if !readOnly><a-button type="primary" @click="onAdd">新增</a-button></#if>
+      <a-button type="primary" @click="onAdd">新增</a-button>
     </a-space>
   </p>
-  <a-table :dataSource="${domain}s"
+  <a-table :dataSource="trains"
            :columns="columns"
            :pagination="pagination"
            @change="handleTableChange"
            :loading="loading">
     <template #bodyCell="{ column, record }">
       <template v-if="column.dataIndex === 'operation'">
-        <#if !readOnly>
         <a-space>
           <a-popconfirm
               title="删除后不可恢复，确认删除?"
@@ -22,51 +21,49 @@
           </a-popconfirm>
           <a @click="onEdit(record)">编辑</a>
         </a-space>
-        </#if>
       </template>
-      <#list fieldList as field>
-        <#if field.enums>
-      <template v-else-if="column.dataIndex === '${field.nameHump}'">
-        <span v-for="item in ${field.enumsConst}_ARRAY" :key="item.code">
-          <span v-if="item.code === record.${field.nameHump}">
+      <template v-else-if="column.dataIndex === 'type'">
+        <span v-for="item in TRAIN_TYPE_ARRAY" :key="item.code">
+          <span v-if="item.code === record.type">
             {{item.desc}}
           </span>
         </span>
       </template>
-        </#if>
-      </#list>
     </template>
   </a-table>
-  <#if !readOnly>
-  <a-modal v-model:visible="visible" title="${tableNameCn}" @ok="handleOk"
+  <a-modal v-model:visible="visible" title="车次" @ok="handleOk"
            ok-text="确认" cancel-text="取消">
-    <a-form :model="${domain}" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
-      <#list fieldList as field>
-        <#if field.name!="id" && field.nameHump!="createTime" && field.nameHump!="updateTime">
-      <a-form-item label="${field.nameCn}">
-        <#if field.enums>
-        <a-select v-model:value="${domain}.${field.nameHump}">
-          <a-select-option v-for="item in ${field.enumsConst}_ARRAY" :key="item.code" :value="item.code">
+    <a-form :model="train" :label-col="{span: 4}" :wrapper-col="{ span: 20 }">
+      <a-form-item label="车次编号">
+        <a-input v-model:value="train.code" />
+      </a-form-item>
+      <a-form-item label="车次类型">
+        <a-select v-model:value="train.type">
+          <a-select-option v-for="item in TRAIN_TYPE_ARRAY" :key="item.code" :value="item.code">
             {{item.desc}}
           </a-select-option>
         </a-select>
-        <#elseif field.javaType=='Date'>
-          <#if field.type=='time'>
-        <a-time-picker v-model:value="${domain}.${field.nameHump}" valueFormat="HH:mm:ss" placeholder="请选择时间" />
-          <#elseif field.type=='date'>
-        <a-date-picker v-model:value="${domain}.${field.nameHump}" valueFormat="YYYY-MM-DD" placeholder="请选择日期" />
-          <#else>
-        <a-date-picker v-model:value="${domain}.${field.nameHump}" valueFormat="YYYY-MM-DD HH:mm:ss" show-time placeholder="请选择日期" />
-          </#if>
-        <#else>
-        <a-input v-model:value="${domain}.${field.nameHump}" />
-        </#if>
       </a-form-item>
-        </#if>
-      </#list>
+      <a-form-item label="始发站">
+        <a-input v-model:value="train.start" />
+      </a-form-item>
+      <a-form-item label="始发站拼音">
+        <a-input v-model:value="train.startPinyin" />
+      </a-form-item>
+      <a-form-item label="出发时间">
+        <a-time-picker v-model:value="train.startTime" valueFormat="HH:mm:ss" placeholder="请选择时间" />
+      </a-form-item>
+      <a-form-item label="终点站">
+        <a-input v-model:value="train.end" />
+      </a-form-item>
+      <a-form-item label="终点站拼音">
+        <a-input v-model:value="train.endPinyin" />
+      </a-form-item>
+      <a-form-item label="到站时间">
+        <a-time-picker v-model:value="train.endTime" valueFormat="HH:mm:ss" placeholder="请选择时间" />
+      </a-form-item>
     </a-form>
   </a-modal>
-  </#if>
 </template>
 
 <script>
@@ -75,20 +72,24 @@
   import axios from "axios";
 
   export default defineComponent({
-  name: "${do_main}-view",
+  name: "train-view",
   setup() {
-    <#list fieldList as field>
-    <#if field.enums>
-    const ${field.enumsConst}_ARRAY = window.${field.enumsConst}_ARRAY;
-    </#if>
-    </#list>
+    const TRAIN_TYPE_ARRAY = window.TRAIN_TYPE_ARRAY;
     const visible = ref(false);
-    const ${domain} = ref({
-      <#list fieldList as field>
-      ${field.nameHump}: undefined,
-      </#list>
+    const train = ref({
+      id: undefined,
+      code: undefined,
+      type: undefined,
+      start: undefined,
+      startPinyin: undefined,
+      startTime: undefined,
+      end: undefined,
+      endPinyin: undefined,
+      endTime: undefined,
+      createTime: undefined,
+      updateTime: undefined,
     });
-    const ${domain}s = ref([]);
+    const trains = ref([]);
     // 分页的三个属性名是固定的
     const pagination = ref({
       total: 0,
@@ -97,36 +98,64 @@
     });
     let loading = ref(false);
     const columns = [
-    <#list fieldList as field>
-      <#if field.name!="id" && field.nameHump!="createTime" && field.nameHump!="updateTime">
     {
-      title: '${field.nameCn}',
-      dataIndex: '${field.nameHump}',
-      key: '${field.nameHump}',
+      title: '车次编号',
+      dataIndex: 'code',
+      key: 'code',
     },
-      </#if>
-    </#list>
-    <#if !readOnly>
+    {
+      title: '车次类型',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
+      title: '始发站',
+      dataIndex: 'start',
+      key: 'start',
+    },
+    {
+      title: '始发站拼音',
+      dataIndex: 'startPinyin',
+      key: 'startPinyin',
+    },
+    {
+      title: '出发时间',
+      dataIndex: 'startTime',
+      key: 'startTime',
+    },
+    {
+      title: '终点站',
+      dataIndex: 'end',
+      key: 'end',
+    },
+    {
+      title: '终点站拼音',
+      dataIndex: 'endPinyin',
+      key: 'endPinyin',
+    },
+    {
+      title: '到站时间',
+      dataIndex: 'endTime',
+      key: 'endTime',
+    },
     {
       title: '操作',
       dataIndex: 'operation'
     }
-    </#if>
     ];
 
-    <#if !readOnly>
     const onAdd = () => {
-      ${domain}.value = {};
+      train.value = {};
       visible.value = true;
     };
 
     const onEdit = (record) => {
-      ${domain}.value = window.Tool.copy(record);
+      train.value = window.Tool.copy(record);
       visible.value = true;
     };
 
     const onDelete = (record) => {
-      axios.delete("/${module}/admin/${do_main}/delete/" + record.id).then((response) => {
+      axios.delete("/business/admin/train/delete/" + record.id).then((response) => {
         const data = response.data;
         if (data.success) {
           notification.success({description: "删除成功！"});
@@ -141,7 +170,7 @@
     };
 
     const handleOk = () => {
-      axios.post("/${module}/admin/${do_main}/save", ${domain}.value).then((response) => {
+      axios.post("/business/admin/train/save", train.value).then((response) => {
         let data = response.data;
         if (data.success) {
           notification.success({description: "保存成功！"});
@@ -155,7 +184,6 @@
         }
       });
     };
-    </#if>
 
     const handleQuery = (param) => {
       if (!param) {
@@ -165,7 +193,7 @@
         };
       }
       loading.value = true;
-      axios.get("/${module}/admin/${do_main}/query-list", {
+      axios.get("/business/admin/train/query-list", {
         params: {
           page: param.page,
           size: param.size
@@ -174,7 +202,7 @@
         loading.value = false;
         let data = response.data;
         if (data.success) {
-          ${domain}s.value = data.content.list;
+          trains.value = data.content.list;
           // 设置分页控件的值
           pagination.value.current = param.page;
           pagination.value.total = data.content.total;
@@ -201,25 +229,19 @@
     });
 
     return {
-      <#list fieldList as field>
-      <#if field.enums>
-      ${field.enumsConst}_ARRAY,
-      </#if>
-      </#list>
-      ${domain},
+      TRAIN_TYPE_ARRAY,
+      train,
       visible,
-      ${domain}s,
+      trains,
       pagination,
       columns,
       handleTableChange,
       handleQuery,
       loading,
-      <#if !readOnly>
       onAdd,
       handleOk,
       onEdit,
       onDelete
-      </#if>
     };
   },
 });
