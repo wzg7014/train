@@ -69,4 +69,12 @@ public class TrainService {
         trainMapper.deleteByPrimaryKey(id);
     }
 
+    public List<TrainQueryResp> queryAll(){
+        TrainExample trainExample = new TrainExample();
+        trainExample.setOrderByClause("code desc");
+        List<Train> trains = trainMapper.selectByExample(trainExample);
+        return BeanUtil.copyToList(trains, TrainQueryResp.class);
+    }
+
+
 }
