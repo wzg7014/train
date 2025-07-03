@@ -5,23 +5,26 @@ spring:
     gateway:
       routes:
         - id: member
-          uri:
-            http://127.0.0.1:8001
+          uri: http://127.0.0.1:8001
           predicates:
-            Path=/member/**
+            - Path=/member/**
+        - id: business
+          uri: http://127.0.0.1:8002
+          predicates:
+            - Path=/business/**
       globalcors:
         cors-configurations:
-                  '[/**]':
-                    allowedOriginPatterns: "*"
-                    allowedHeaders: "*"
-                    allowedMethods:
-                      - GET
-                      - POST
-                      - PUT
-                      - DELETE
-                      - OPTIONS
-                    allowCredentials: true
-                    maxAge: 3600
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowCredentials: true
+            maxAge: 3600
   devtools:
     livereload:
       port: 35730

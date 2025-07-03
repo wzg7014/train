@@ -1,4 +1,4 @@
-package com.wzg.train.member.config;
+package com.wzg.train.business.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -11,13 +11,13 @@ import org.springframework.core.env.Environment;
 @SpringBootApplication
 @ComponentScan("com.wzg")
 @MapperScan("com.wzg.train.*.mapper")
-public class MemberApplication {
+public class BusinessApplication {
 
 
-    private static final Logger LOG = LoggerFactory.getLogger(MemberApplication.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BusinessApplication.class);
 
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(MemberApplication.class);
+        SpringApplication app = new SpringApplication(BusinessApplication.class);
         Environment env = app.run(args).getEnvironment();
         LOG.info("启动！启动！启动！");
         LOG.info("测试地址: \thttp://127.0.0.1:{}{}/hello", env.getProperty("server.port"), env.getProperty("server.servlet.context-path"));
