@@ -12,7 +12,7 @@ import com.wzg.train.${module}.domain.${Domain}Example;
 import com.wzg.train.${module}.mapper.${Domain}Mapper;
 import com.wzg.train.${module}.req.${Domain}QueryReq;
 import com.wzg.train.${module}.req.${Domain}SaveReq;
-import com.wzg.train.${module}.resp.${Domain}QuaryResp;
+import com.wzg.train.${module}.resp.${Domain}QueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class ${Domain}Service {
 
     }
 
-    public PageResp<${Domain}QuaryResp> queryList(${Domain}QueryReq req){
+    public PageResp<${Domain}QueryResp> queryList(${Domain}QueryReq req){
         ${Domain}Example ${domain}Example = new ${Domain}Example();
         ${domain}Example.setOrderByClause("id desc");
         ${Domain}Example.Criteria criteria = ${domain}Example.createCriteria();
@@ -57,9 +57,9 @@ public class ${Domain}Service {
         LOG.info("总行数：{}", pageInfo.getTotal());
         LOG.info("总页数：{}", pageInfo.getPages());
 
-        List<${Domain}QuaryResp> list = BeanUtil.copyToList(${domain}s, ${Domain}QuaryResp.class);
+        List<${Domain}QueryResp> list = BeanUtil.copyToList(${domain}s, ${Domain}QueryResp.class);
 
-        PageResp<${Domain}QuaryResp> pageResp = new PageResp<>();
+        PageResp<${Domain}QueryResp> pageResp = new PageResp<>();
         pageResp.setTotal(pageInfo.getTotal());
         pageResp.setList(list);
         return pageResp;

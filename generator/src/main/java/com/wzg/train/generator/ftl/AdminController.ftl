@@ -1,19 +1,18 @@
-package com.wzg.train.${module}.controller;
+package com.wzg.train.${module}.controller.admin;
 
-import com.wzg.train.common.context.LoginMemberContext;
 import com.wzg.train.common.resp.CommonResp;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.${module}.req.${Domain}QueryReq;
 import com.wzg.train.${module}.req.${Domain}SaveReq;
-import com.wzg.train.${module}.resp.${Domain}QuaryResp;
+import com.wzg.train.${module}.resp.${Domain}QueryResp;
 import com.wzg.train.${module}.service.${Domain}Service;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/${do_main}")
-public class ${Domain}Controller {
+@RequestMapping("/admin/${do_main}")
+public class ${Domain}AdminController {
 
     @Resource
     private ${Domain}Service ${domain}Service;
@@ -25,8 +24,8 @@ public class ${Domain}Controller {
     }
 
     @GetMapping("/query-list")
-    public CommonResp<PageResp<${Domain}QuaryResp>> queryList(@Valid ${Domain}QueryReq req) {
-        PageResp<${Domain}QuaryResp> list = ${domain}Service.queryList(req);
+    public CommonResp<PageResp<${Domain}QueryResp>> queryList(@Valid ${Domain}QueryReq req) {
+        PageResp<${Domain}QueryResp> list = ${domain}Service.queryList(req);
         return new CommonResp<>(list);
     }
 

@@ -1,6 +1,5 @@
-package com.wzg.train.business.controller;
+package com.wzg.train.business.controller.admin;
 
-import com.wzg.train.common.context.LoginMemberContext;
 import com.wzg.train.common.resp.CommonResp;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.business.req.StationQueryReq;
@@ -12,8 +11,8 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/station")
-public class StationController {
+@RequestMapping("/admin/station")
+public class StationAdminController {
 
     @Resource
     private StationService stationService;
