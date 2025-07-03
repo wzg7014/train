@@ -41,7 +41,8 @@
                              targetPackage="com.wzg.train.business.mapper"
                              type="XMLMAPPER"/>
 
-        <table tableName="train_carriage" domainObjectName="TrainCarriage"/>
-<!--        <table tableName="passenger" domainObjectName="Passenger"/>-->
+        <!--        <table tableName="passenger" domainObjectName="Passenger"/>-->
+<!--        <table tableName="train_carriage" domainObjectName="TrainCarriage"/>-->
+        <table tableName="train_seat" domainObjectName="TrainSeat"/>
     </context>
 </generatorConfiguration>
