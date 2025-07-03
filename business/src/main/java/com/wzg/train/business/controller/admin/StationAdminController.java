@@ -1,5 +1,6 @@
 package com.wzg.train.business.controller.admin;
 
+import com.wzg.train.business.resp.TrainQueryResp;
 import com.wzg.train.common.resp.CommonResp;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.business.req.StationQueryReq;
@@ -9,6 +10,8 @@ import com.wzg.train.business.service.StationService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin/station")
@@ -33,5 +36,11 @@ public class StationAdminController {
     public CommonResp<Object> delete(@PathVariable Long id) {
         stationService.delete(id);
         return new CommonResp<>();
+    }
+
+    @GetMapping("/query-all")
+    public CommonResp<List<StationQueryResp>> queryList() {
+        List<StationQueryResp> list = stationService.queryAll();
+        return new CommonResp<>(list);
     }
 }
