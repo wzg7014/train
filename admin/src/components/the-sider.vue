@@ -3,7 +3,6 @@
     <a-menu
         mode="inline"
         v-model:selectedKeys="selectedKeys"
-        v-model:openKeys="openKeys"
         :style="{ height: '100%', borderRight: 0 }"
     >
       <a-menu-item key="/welcome">
@@ -11,9 +10,9 @@
           <coffee-outlined /> &nbsp; 欢迎
         </router-link>
       </a-menu-item>
-      <a-menu-item key="/passenger">
-        <router-link to="/passenger">
-          <coffee-outlined /> &nbsp; 乘车人管理
+      <a-menu-item key="/about">
+        <router-link to="/about">
+          <user-outlined /> &nbsp; 关于
         </router-link>
       </a-menu-item>
     </a-menu>
