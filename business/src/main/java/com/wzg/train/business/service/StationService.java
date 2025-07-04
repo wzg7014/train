@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import com.wzg.train.business.domain.Train;
 import com.wzg.train.business.domain.TrainExample;
 import com.wzg.train.business.resp.TrainQueryResp;
+import com.wzg.train.common.exception.BusinessException;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.common.utils.SnowUtil;
 import com.wzg.train.business.domain.Station;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.wzg.train.common.exception.BusinessExceptionEnum.BUSINESS_STATION_NAME_UNIQUE_ERROR;
+
 @Service
 public class StationService {
 
@@ -34,6 +37,16 @@ public class StationService {
     public void save(StationSaveReq req){
         DateTime now = DateTime.now();
         Station station = BeanUtil.copyProperties(req, Station.class);
+
+
+        //保存数据之前，先判断唯一键是否存在
+        StationExample stationExample = new StationExample();
+        stationExample.createCriteria().andNameEqualTo(req.getName());
+        List<Station> list = stationMapper.selectByExample(stationExample);
+        if(ObjectUtil.isNotEmpty(list)) {
+            throw new BusinessException(BUSINESS_STATION_NAME_UNIQUE_ERROR);
+        }
+
         if (ObjectUtil.isNull(station.getId())){
             station.setId(SnowUtil.getSnowflakeNextId());
             station.setCreateTime(now);
