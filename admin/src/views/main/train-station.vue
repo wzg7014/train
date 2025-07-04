@@ -91,7 +91,7 @@ import StationSelectView from "@/components/station-select.vue";
     });
     let loading = ref(false);
     let params = ref({
-      trainCode: ""
+      trainCode: null
     });
     const columns = [
     {
