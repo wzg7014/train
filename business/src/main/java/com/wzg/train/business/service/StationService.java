@@ -40,10 +40,8 @@ public class StationService {
 
 
         //保存数据之前，先判断唯一键是否存在
-        StationExample stationExample = new StationExample();
-        stationExample.createCriteria().andNameEqualTo(req.getName());
-        List<Station> list = stationMapper.selectByExample(stationExample);
-        if(ObjectUtil.isNotEmpty(list)) {
+        Station stationDB = selectByUnique(req.getName());
+        if(ObjectUtil.isNotEmpty(stationDB)) {
             throw new BusinessException(BUSINESS_STATION_NAME_UNIQUE_ERROR);
         }
 
@@ -57,6 +55,17 @@ public class StationService {
             stationMapper.updateByPrimaryKey(station);
         }
 
+    }
+
+    private Station selectByUnique(String name) {
+        StationExample stationExample = new StationExample();
+        stationExample.createCriteria().andNameEqualTo(name);
+        List<Station> list = stationMapper.selectByExample(stationExample);
+        if(ObjectUtil.isNotEmpty(list)) {
+            return list.get(0);
+        }else {
+            return null;
+        }
     }
 
     public PageResp<StationQueryResp> queryList(StationQueryReq req){
