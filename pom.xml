@@ -8,6 +8,8 @@
         <module>member</module>
         <module>business</module>
         <module>generator</module>
+        <module>gateway</module>
+        <module>batch</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
