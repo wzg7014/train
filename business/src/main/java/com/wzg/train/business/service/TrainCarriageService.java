@@ -1,11 +1,13 @@
 package com.wzg.train.business.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzg.train.business.enums.SeatColEnum;
+import com.wzg.train.common.exception.BusinessException;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.common.utils.SnowUtil;
 import com.wzg.train.business.domain.TrainCarriage;
@@ -21,6 +23,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.wzg.train.common.exception.BusinessExceptionEnum.BUSINESS_TRAIN_CARRIAGE_INDEX_UNIQUE_ERROR;
+
 @Service
 public class TrainCarriageService {
 
@@ -30,6 +34,12 @@ public class TrainCarriageService {
     private TrainCarriageMapper trainCarriageMapper;
 
     public void save(TrainCarriageSaveReq req){
+        //保存数据之前，先判断唯一键是否存在
+        TrainCarriage carriageDb = selectByUnique(req.getTrainCode(),req.getIndex());
+        if(ObjectUtil.isNotEmpty(carriageDb)) {
+            throw new BusinessException(BUSINESS_TRAIN_CARRIAGE_INDEX_UNIQUE_ERROR);
+        }
+
         //自动计算出车座总数和列数
         List<SeatColEnum> seatColEnums = SeatColEnum.getColsByType(req.getSeatType());
         req.setColCount(seatColEnums.size());
@@ -84,6 +94,18 @@ public class TrainCarriageService {
         TrainCarriageExample.Criteria criteria = trainCarriageExample.createCriteria();
         criteria.andTrainCodeEqualTo(trainCode);
         return trainCarriageMapper.selectByExample(trainCarriageExample);
+    }
 
+
+    //唯一键是否存在抽取成一个方法
+    private TrainCarriage selectByUnique(String code, Integer index) {
+        TrainCarriageExample trainCarriageExample = new TrainCarriageExample();
+        trainCarriageExample.createCriteria().andTrainCodeEqualTo(code).andIndexEqualTo(index);
+        List<TrainCarriage> trainCarriage = trainCarriageMapper.selectByExample(trainCarriageExample);
+        if(CollUtil.isEmpty(trainCarriage)) {
+            return null;
+        }else {
+            return trainCarriage.get(0);
+        }
     }
 }

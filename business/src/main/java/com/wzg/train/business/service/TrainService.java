@@ -1,10 +1,12 @@
 package com.wzg.train.business.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wzg.train.common.exception.BusinessException;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.common.utils.SnowUtil;
 import com.wzg.train.business.domain.Train;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.wzg.train.common.exception.BusinessExceptionEnum.BUSINESS_TRAIN_CODE_UNIQUE_ERROR;
+
 @Service
 public class TrainService {
 
@@ -30,6 +34,13 @@ public class TrainService {
 
     public void save(TrainSaveReq req){
         DateTime now = DateTime.now();
+
+        //保存数据之前，先判断唯一键是否存在
+        Train trainDb = selectByUnique(req.getCode());
+        if(ObjectUtil.isNotEmpty(trainDb)) {
+            throw new BusinessException(BUSINESS_TRAIN_CODE_UNIQUE_ERROR);
+        }
+
         Train train = BeanUtil.copyProperties(req, Train.class);
         if (ObjectUtil.isNull(train.getId())){
             train.setId(SnowUtil.getSnowflakeNextId());
@@ -77,4 +88,15 @@ public class TrainService {
     }
 
 
+    //唯一键是否存在抽取成一个方法
+    private Train selectByUnique(String name) {
+        TrainExample trainExample = new TrainExample();
+        trainExample.createCriteria().andCodeEqualTo(name);
+        List<Train> train = trainMapper.selectByExample(trainExample);
+        if(CollUtil.isEmpty(train)) {
+            return null;
+        }else {
+            return train.get(0);
+        }
+    }
 }
