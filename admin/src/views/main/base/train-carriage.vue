@@ -66,15 +66,9 @@
   import {notification} from "ant-design-vue";
   import axios from "axios";
   import TrainSelectView from "@/components/train-select.vue";
-  import trainStation from "@/views/main/train-station.vue";
 
   export default defineComponent({
   name: "train-carriage-view",
-    computed: {
-      trainStation() {
-        return trainStation
-      }
-    },
     components: {TrainSelectView},
   setup() {
     const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY;
