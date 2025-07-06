@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import {defineComponent, onMounted, ref} from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import {notification} from "ant-design-vue";
 import axios from "axios";
-import TrainSelectView from "@/components/train-select.vue";
+import TrainSelectView from "@/components/train-select";
 
 export default defineComponent({
   name: "daily-train-seat-view",
@@ -44,7 +44,7 @@ export default defineComponent({
     const SEAT_COL_ARRAY = window.SEAT_COL_ARRAY;
     const SEAT_TYPE_ARRAY = window.SEAT_TYPE_ARRAY;
     const visible = ref(false);
-    const dailyTrainSeat = ref({
+    let dailyTrainSeat = ref({
       id: undefined,
       date: undefined,
       trainCode: undefined,
