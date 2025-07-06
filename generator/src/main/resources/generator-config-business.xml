@@ -43,6 +43,6 @@
 
         <!--        <table tableName="passenger" domainObjectName="Passenger"/>-->
 <!--        <table tableName="train_carriage" domainObjectName="TrainCarriage"/>-->
-        <table tableName="daily_train_carriage" domainObjectName="DailyTrainCarriage"/>
+        <table tableName="daily_train_seat" domainObjectName="dailyTrainSeat"/>
     </context>
 </generatorConfiguration>
