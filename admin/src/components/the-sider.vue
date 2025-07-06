@@ -4,7 +4,7 @@
         mode="inline"
         v-model:selectedKeys="selectedKeys"
         :style="{ height: '100%', borderRight: 0 }"
-        :openKeys="['batch', 'base']"
+        :openKeys="['batch', 'base', 'business']"
     >
       <a-menu-item key="/welcome">
         <router-link to="/welcome">
@@ -17,20 +17,19 @@
         </router-link>
       </a-menu-item>
 
-      <a-sub-menu key="batch">
+      <a-sub-menu key="business">
         <template #title>
           <span>
             <UnorderedListOutlined />
-            跑批管理
+            业务管理
           </span>
         </template>
-        <a-menu-item key="/batch/job">
-          <router-link to="/batch/job">
-            <MenuUnfoldOutlined /> &nbsp; 任务管理
+        <a-menu-item key="/business/daily-train">
+          <router-link to="/business/daily-train">
+            <user-outlined /> &nbsp; 每日车次
           </router-link>
         </a-menu-item>
       </a-sub-menu>
-
 
       <a-sub-menu key="base">
         <template #title>
@@ -39,8 +38,6 @@
             基础数据
           </span>
         </template>
-
-
         <a-menu-item key="/base/station">
           <router-link to="/base/station">
             <user-outlined /> &nbsp; 车站管理
@@ -57,7 +54,6 @@
             <user-outlined /> &nbsp;火车车站
           </router-link>
         </a-menu-item>
-
         <a-menu-item key="/base/train-carriage">
           <router-link to="/base/train-carriage">
             <user-outlined /> &nbsp;火车车箱
@@ -68,7 +64,20 @@
             <user-outlined /> &nbsp;火车座位
           </router-link>
         </a-menu-item>
+      </a-sub-menu>
 
+      <a-sub-menu key="batch">
+        <template #title>
+          <span>
+            <UnorderedListOutlined />
+            跑批管理
+          </span>
+        </template>
+        <a-menu-item key="/batch/job">
+          <router-link to="/batch/job">
+            <MenuUnfoldOutlined /> &nbsp; 任务管理
+          </router-link>
+        </a-menu-item>
       </a-sub-menu>
     </a-menu>
   </a-layout-sider>

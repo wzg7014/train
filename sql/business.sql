@@ -73,3 +73,21 @@ create table `train_seat` (
                               `update_time` datetime(3) comment '修改时间',
                               primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='座位';
+
+DROP TABLE IF EXISTS `daily_train`;
+CREATE TABLE `daily_train`  (
+                                `id` bigint NOT NULL COMMENT 'id',
+                                `date` date NOT NULL COMMENT '日期',
+                                `code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '车次编号',
+                                `type` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '车次类型|枚举[TrainTypeEnum]',
+                                `start` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '始发站',
+                                `start_pinyin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '始发站拼音',
+                                `start_time` time(0) NOT NULL COMMENT '出发时间',
+                                `end` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '终点站',
+                                `end_pinyin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '终点站拼音',
+                                `end_time` time(0) NOT NULL COMMENT '到站时间',
+                                `create_time` datetime(3) NULL DEFAULT NULL COMMENT '新增时间',
+                                `update_time` datetime(3) NULL DEFAULT NULL COMMENT '修改时间',
+                                PRIMARY KEY (`id`) USING BTREE,
+                                UNIQUE INDEX `date_code_unique`(`date`, `code`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '每日车次' ROW_FORMAT = Dynamic;
