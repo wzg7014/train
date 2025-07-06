@@ -1,13 +1,16 @@
 package com.wzg.train.business.req;
 
 import com.wzg.train.common.req.PageReq;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
+@Data
 public class dailyTrainSeatQueryReq extends PageReq {
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("dailyTrainSeatQueryReq{");
-        sb.append('}');
-        return sb.toString();
-    }
+    private String trainCode;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
 }
