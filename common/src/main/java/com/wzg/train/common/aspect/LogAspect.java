@@ -50,7 +50,7 @@ public class LogAspect {
         String name = signature.getName();
 
         // 打印请求信息
-        LOG.info("------------- 开始 -------------");
+        LOG.info("----------------------  开始  ----------------------");
         LOG.info("请求地址: {} {}", request.getRequestURL().toString(), request.getMethod());
         LOG.info("类名方法: {}.{}", signature.getDeclaringTypeName(), name);
         LOG.info("远程地址: {}", request.getRemoteAddr());
@@ -87,7 +87,7 @@ public class LogAspect {
         PropertyPreFilters.MySimplePropertyPreFilter excludefilter = filters.addFilter();
         excludefilter.addExcludes(excludeProperties);
         LOG.info("返回结果: {}", JSONObject.toJSONString(result, excludefilter));
-        LOG.info("------------- 结束 耗时：{} ms -------------", System.currentTimeMillis() - startTime);
+        LOG.info("------------------- 结束 耗时：{} ms -------------------", System.currentTimeMillis() - startTime);
         return result;
     }
 
