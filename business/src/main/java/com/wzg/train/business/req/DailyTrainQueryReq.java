@@ -1,13 +1,20 @@
 package com.wzg.train.business.req;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wzg.train.common.req.PageReq;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
+@AllArgsConstructor
+@Data
 public class DailyTrainQueryReq extends PageReq {
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("DailyTrainQueryReq{");
-        sb.append('}');
-        return sb.toString();
-    }
+    private String code;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
+
 }
