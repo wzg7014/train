@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class dailyTrainSeatQueryReq extends PageReq {
+public class DailyTrainSeatQueryReq extends PageReq {
 
     private String trainCode;
 

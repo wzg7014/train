@@ -1,65 +1,57 @@
-package com.wzg.train.business.req;
+package com.wzg.train.business.resp;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-public class dailyTrainSeatSaveReq {
+public class DailyTrainSeatQueryResp {
 
     /**
      * id
      */
+    @JsonSerialize(using= ToStringSerializer.class)
     private Long id;
 
     /**
      * 日期
      */
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    @NotNull(message = "【日期】不能为空")
     private Date date;
 
     /**
      * 车次编号
      */
-    @NotBlank(message = "【车次编号】不能为空")
     private String trainCode;
 
     /**
      * 箱序
      */
-    @NotNull(message = "【箱序】不能为空")
     private Integer carriageIndex;
 
     /**
      * 排号|01, 02
      */
-    @NotBlank(message = "【排号】不能为空")
     private String row;
 
     /**
      * 列号|枚举[SeatColEnum]
      */
-    @NotBlank(message = "【列号】不能为空")
     private String col;
 
     /**
      * 座位类型|枚举[SeatTypeEnum]
      */
-    @NotBlank(message = "【座位类型】不能为空")
     private String seatType;
 
     /**
      * 同车箱座序
      */
-    @NotNull(message = "【同车箱座序】不能为空")
     private Integer carriageSeatIndex;
 
     /**
      * 售卖情况|将经过的车站用01拼接，0表示可卖，1表示已卖
      */
-    @NotBlank(message = "【售卖情况】不能为空")
     private String sell;
 
     /**
