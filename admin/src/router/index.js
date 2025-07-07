@@ -22,6 +22,9 @@ const routes = [
       {
         path: 'business/',
         children: [{
+          path: 'daily-train-ticket',
+          component: () => import('../views/main/business/daily-train-ticket.vue')
+        },{
           path: 'daily-train',
           component: () => import('../views/main/business/daily-train.vue')
         },{
