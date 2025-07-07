@@ -39,6 +39,9 @@ public class DailyTrainService {
     @Resource
     private DailyTrainStationService dailyTrainStationService;
 
+    @Resource
+    private DailyTrainCarriageService dailyTrainCarriageService;
+
 
     public void save(DailyTrainSaveReq req){
         DateTime now = DateTime.now();
@@ -92,6 +95,7 @@ public class DailyTrainService {
      * @param date
      */
     public void genDaily(Date date){
+        LOG.info("开始生成车次信息");
         List<Train> trainList = trainService.selectAll();
         if (CollUtil.isEmpty(trainList)){
             LOG.info("没有车次基础数据，任务结束");
@@ -123,6 +127,9 @@ public class DailyTrainService {
 
         //生成该车次的车站的数据
         dailyTrainStationService.genDaily(date, train.getCode());
+
+        //生成该车次的车厢的数据
+        dailyTrainCarriageService.genDaily(date, train.getCode());
 
 
         LOG.info("生成日期【{}】车次【{}】的信息结束", DateUtil.formatDate(date), train.getCode());
