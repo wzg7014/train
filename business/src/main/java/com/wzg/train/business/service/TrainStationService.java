@@ -112,5 +112,12 @@ public class TrainStationService {
         }
     }
 
+    public List<TrainStation> selectByTrainCode(String code) {
+        TrainStationExample trainStationExample = new TrainStationExample();
+        trainStationExample.setOrderByClause("`index` asc");
+        trainStationExample.createCriteria().andTrainCodeEqualTo(code);
+        return trainStationMapper.selectByExample(trainStationExample);
+    }
+
 
 }
