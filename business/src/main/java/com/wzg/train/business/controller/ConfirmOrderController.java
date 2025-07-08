@@ -11,7 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin/confirm-order")
+@RequestMapping("/confirm-order")
 public class ConfirmOrderController {
 
     @Resource

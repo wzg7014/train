@@ -327,7 +327,7 @@ export default defineComponent({
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          notification.success({description: data.content})
+          notification.success({description: "下单成功！"});
         } else {
           notification.error({description: data.message});
         }
