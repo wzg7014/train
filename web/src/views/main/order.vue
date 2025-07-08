@@ -92,6 +92,7 @@
         </div>
         <br/>
         最终购票：{{tickets}}
+        最终选座：{{chooseSeatObj}}
       </div>
     </a-modal>
   </div>
@@ -149,6 +150,7 @@ export default defineComponent({
     //   passengerName: "张三",
     //   passengerIdCard: "12323132132",
     //   seatTypeCode: "1",
+    //   seat:"C1"
     // }
     const tickets = ref([]);
 
@@ -184,6 +186,7 @@ export default defineComponent({
 
     //通过乘客选择车座类型后，再初始化车座
     watch(() => SEAT_COL_ARRAY.value, () => {
+      //清空点
       chooseSeatObj.value = {};
       for (let i = 1; i <= 2; i++) {
         SEAT_COL_ARRAY.value.forEach((item) => {
