@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<memory>
+  <item id="mem_1751954435137_sic7b5tpy" time="2025/07/08 14:00">
+    <content>
+      ## Windows PowerShell命令行使用规则
+    
+      ### 环境约束
+      - 用户使用Windows环境，主要使用PowerShell
+      - 避免使用Linux/Mac特有的命令语法
+      - 所有命令执行都要考虑Windows兼容性
+    
+      ### 常用命令对照表
+      **文件操作**
+      - 列出文件: `Get-ChildItem` 或 `dir` (避免使用 `ls`)
+      - 查看文件: `Get-Content file.txt` 或 `type file.txt` (避免使用 `cat`)
+      - 删除文件: `Remove-Item` 或 `del` (避免使用 `rm`)
+      - 复制文件: `Copy-Item` 或 `copy` (避免使用 `cp`)
+    
+      **路径处理**
+      - 使用反斜杠 `\` 作为路径分隔符
+      - 或使用PowerShell兼容的正斜杠 `/`
+      - 避免使用纯Linux路径语法
+    
+      **Java/Maven开发**
+      - `java -version` ✅
+      - `mvn clean compile` ✅
+      - `mvn spring-boot:run` ✅
+      - 避免使用 `./mvnw` 等Unix特有语法
+    
+      **网络工具**
+      - 使用 `Invoke-WebRequest` 替代 `curl`
+      - 使用 `Test-NetConnection` 替代 `ping` (某些场景)
+    
+      ### 执行策略
+      1. 优先使用跨平台兼容的命令
+      2. 其次使用PowerShell原生命令
+      3. 最后考虑CMD命令作为备选
+      4. 绝对避免纯Linux/Mac命令 --tags windows powershell 命令行 环境配置 开发规范
+    </content>
+    <tags>#最佳实践 #工具使用</tags>
+  </item>
+</memory>
