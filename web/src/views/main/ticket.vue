@@ -170,7 +170,7 @@
     ];
 
     const toOrder = (record) => {
-      SessionStorage.set("dailyTrainTicket",record)
+      SessionStorage.set(SESSION_ORDER,record)
       router.push("/order")
     }
 
@@ -202,6 +202,8 @@
         notification.error({description: "请填写终点站"});
         return;
       }
+
+      SessionStorage.set(SESSION_TICKET_PARAMS,params.value)
 
       if (!param) {
         param = {
@@ -247,7 +249,13 @@
     };
 
     onMounted(() => {
-
+      params.value = SessionStorage.get(SESSION_TICKET_PARAMS) || {}
+      if(Tool.isNotEmpty(params.value)) {
+        handleQuery({
+          page: 1,
+          size: pagination.value.pageSize
+        })
+      }
     });
 
     return {

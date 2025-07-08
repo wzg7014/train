@@ -2,6 +2,7 @@
 SESSION_ORDER = "SESSION_ORDER";
 SESSION_TICKET_PARAMS = "SESSION_TICKET_PARAMS";
 
+
 SessionStorage = {
     get: function (key) {
         var v = sessionStorage.getItem(key);
