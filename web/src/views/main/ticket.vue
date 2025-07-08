@@ -1,7 +1,6 @@
 <template>
   <p>
     <a-space>
-      <train-select-view v-model="params.trainCode" width="200px" @change="onCode"></train-select-view>
       <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"></a-date-picker>
       <station-select-view v-model="params.start" width="200px" @change="onStart"></station-select-view>
       <station-select-view v-model="params.end" width="200px" @change="onCode"></station-select-view>
@@ -179,6 +178,19 @@
     };
 
     const handleQuery = (param) => {
+      if(Tool.isEmpty(params.value.date)) {
+        notification.error({description: "请填写日期"});
+        return;
+      }
+      if(Tool.isEmpty(params.value.start)) {
+        notification.error({description: "请填写起始站"});
+        return;
+      }
+      if(Tool.isEmpty(params.value.end)) {
+        notification.error({description: "请填写终点站"});
+        return;
+      }
+
       if (!param) {
         param = {
           page: 1,
@@ -190,7 +202,6 @@
         params: {
           page: param.page,
           size: param.size,
-          trainCode: params.value.trainCode,
           date: params.value.date,
           start: params.value.start,
           end: params.value.end,
@@ -224,10 +235,7 @@
     };
 
     onMounted(() => {
-      handleQuery({
-        page: 1,
-        size: pagination.value.pageSize
-      });
+
     });
 
     return {
