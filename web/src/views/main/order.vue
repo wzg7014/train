@@ -76,19 +76,24 @@
           </a-col>
         </a-row>
         <br/>
+        选座类型chooseSeatType: {{chooseSeatType}}
+        <br/>
+        选座对象chooseSeatObj: {{chooseSeatObj}}
+        <br/>
+        座位类型SEAT_COL_ARRAY:{{SEAT_COL_ARRAY}}
       </div>
     </a-modal>
   </div>
 </template>
 
 <script>
-import {defineComponent, onMounted, ref, watch} from "vue";
+import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import axios from "axios";
 import {notification} from "ant-design-vue";
 
 export default defineComponent({
   name: "order-view",
-  setup(){
+  setup() {
     const dailyTrainTicket = SessionStorage.get(SESSION_ORDER) || {}
     console.log("下单车票信息", dailyTrainTicket);
 
@@ -99,36 +104,6 @@ export default defineComponent({
     console.log(SEAT_TYPE)
     const visible = ref(false);
 
-    const finishCheckPassenger = () => {
-      console.log("购票列表：", tickets.value);
-
-      if (tickets.value.length > 5) {
-        notification.error({description: '最多只能购买5张车票'});
-        return;
-      }
-
-      // 校验余票是否充足，购票列表中的每个座位类型，都去车次座位余票信息中，看余票是否充足
-      // 前端校验不一定准，但前端校验可以减轻后端很多压力
-      // 注意：这段只是校验，必须copy出seatTypesTemp变量来扣减，用原始的seatTypes去扣减，会影响真实的库存
-      let seatTypesTemp = Tool.copy(seatTypes);
-      for (let i = 0; i < tickets.value.length; i++) {
-        let ticket = tickets.value[i];
-        for (let j = 0; j < seatTypesTemp.length; j++) {
-          let seatType = seatTypesTemp[j];
-          // 同类型座位余票-1，这里扣减的是临时copy出来的库存，不是真正的库存，只是为了校验
-          if (ticket.seatTypeCode === seatType.code) {
-            console.log("扣减了")
-            seatType.count--;
-            if (seatType.count < 0) {
-              notification.error({description: seatType.desc + '余票不足'});
-              return;
-            }
-          }
-        }
-      }
-
-      visible.value = true;
-    }
     const PASSENGER_TYPE_ARRAY = window.PASSENGER_TYPE_ARRAY;
     // 本车次提供的座位类型seatTypes，含票价，余票等信息，例：
     // {
@@ -167,7 +142,7 @@ export default defineComponent({
     const tickets = ref([]);
 
     // 勾选或去掉某个乘客时，在购票列表中加上或去掉一张表
-    watch(() => passengerChecks.value, (newVal, oldVal)=>{
+    watch(() => passengerChecks.value, (newVal, oldVal) => {
       console.log("勾选乘客发生变化", newVal, oldVal)
       // 每次有变化时，把购票列表清空，重新构造列表
       tickets.value = [];
@@ -179,6 +154,34 @@ export default defineComponent({
         passengerIdCard: item.idCard
       }))
     }, {immediate: true});
+
+
+    // 0：不支持选座；1：选一等座；2：选二等座
+    const chooseSeatType = ref(0);
+    // 根据选择的座位类型，计算出对应的列，比如要选的是一等座，就筛选出ACDF，要选的是二等座，就筛选出ABCDF
+    const SEAT_COL_ARRAY = computed(() => {
+      return window.SEAT_COL_ARRAY.filter(item => item.type === chooseSeatType.value);
+    });
+
+    // 选择的座位
+    // {
+    //   A1: false, C1: true，D1: false, F1: false，
+    //   A2: false, C2: false，D2: true, F2: false
+    // }
+    const chooseSeatObj = ref({});
+
+    //通过乘客选择车座类型后，再初始化车座
+    watch(() => SEAT_COL_ARRAY.value, () => {
+      chooseSeatObj.value = {};
+      for (let i = 1; i <= 2; i++) {
+        SEAT_COL_ARRAY.value.forEach((item) => {
+          chooseSeatObj.value[item.code + i] = false;
+        })
+      }
+      console.log("初始化两排座位，都是未选中：", chooseSeatObj.value);
+    }, {immediate: true});
+
+
     const handleQueryPassenger = () => {
       axios.get("/member/passenger/query-mine").then((response) => {
         let data = response.data;
@@ -194,7 +197,68 @@ export default defineComponent({
       });
     };
 
-    onMounted(() =>{
+    const finishCheckPassenger = () => {
+      console.log("购票列表：", tickets.value);
+
+      if (tickets.value.length > 5) {
+        notification.error({description: '最多只能购买5张车票'});
+        return;
+      }
+
+      // 校验余票是否充足，购票列表中的每个座位类型，都去车次座位余票信息中，看余票是否充足
+      // 前端校验不一定准，但前端校验可以减轻后端很多压力
+      // 注意：这段只是校验，必须copy出seatTypesTemp变量来扣减，用原始的seatTypes去扣减，会影响真实的库存
+      let seatTypesTemp = Tool.copy(seatTypes);
+      for (let i = 0; i < tickets.value.length; i++) {
+        let ticket = tickets.value[i];
+        for (let j = 0; j < seatTypesTemp.length; j++) {
+          let seatType = seatTypesTemp[j];
+          // 同类型座位余票-1，这里扣减的是临时copy出来的库存，不是真正的库存，只是为了校验
+          if (ticket.seatTypeCode === seatType.code) {
+            console.log("扣减了")
+            seatType.count--;
+            if (seatType.count < 0) {
+              notification.error({description: seatType.desc + '余票不足'});
+              return;
+            }
+          }
+        }
+      }
+      console.log("前端余票检验通过");
+
+      // 判断是否支持选座，只有纯一等座和纯二等座支持选座
+      // 先筛选出购票列表中的所有座位类型，比如四张表：[1, 1, 2, 2]
+      let ticketSeatTypeCodes = [];
+      for (let i = 0; i < tickets.value.length; i++) {
+        let ticket = tickets.value[i];
+        ticketSeatTypeCodes.push(ticket.seatTypeCode);
+      }
+      console.log("ticketSeatTypeCodes" + ticketSeatTypeCodes)
+      // 为购票列表中的所有座位类型去重：[1, 2]
+      const ticketSeatTypeCodesSet = Array.from(new Set(ticketSeatTypeCodes));
+      console.log("选好的座位类型：", ticketSeatTypeCodesSet);
+      //set长度超过1，说明set容器里超过两种类型的车座
+      if (ticketSeatTypeCodesSet.length !== 1) {
+        console.log("选了多种座位，不支持选座");
+        chooseSeatType.value = 0;
+      } else {
+        // ticketSeatTypeCodesSet.length === 1，即只选择了一种座位（不是一个座位，是一种座位）
+        if (ticketSeatTypeCodesSet[0] === SEAT_TYPE.YDZ.code) {
+          console.log("一等座选座");
+          chooseSeatType.value = SEAT_TYPE.YDZ.code;
+        } else if (ticketSeatTypeCodesSet[0] === SEAT_TYPE.EDZ.code) {
+          console.log("二等座选座");
+          chooseSeatType.value = SEAT_TYPE.EDZ.code;
+        } else {
+          console.log("不是一等座或二等座，不支持选座");
+          chooseSeatType.value = 0;
+        }
+      }
+      //弹出确认界面
+      visible.value = true;
+    };
+
+    onMounted(() => {
       handleQueryPassenger()
     })
 
@@ -208,7 +272,10 @@ export default defineComponent({
       tickets,
       PASSENGER_TYPE_ARRAY,
       visible,
-      finishCheckPassenger
+      finishCheckPassenger,
+      chooseSeatType,
+      SEAT_COL_ARRAY,
+      chooseSeatObj
     }
   }
 })
