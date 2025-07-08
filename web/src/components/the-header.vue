@@ -24,7 +24,12 @@
       </a-menu-item>
       <a-menu-item key="/passenger">
         <router-link to="/passenger">
-          <coffee-outlined /> &nbsp; 乘车人管理
+          <user-outlined /> &nbsp; 乘车人管理
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="/ticket">
+        <router-link to="/ticket">
+          <user-outlined /> &nbsp; 余票管理
         </router-link>
       </a-menu-item>
     </a-menu>
