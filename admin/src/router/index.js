@@ -22,6 +22,9 @@ const routes = [
       {
         path: 'business/',
         children: [{
+          path: 'confirm-order',
+          component: () => import('../views/main/business/confirm-order.vue')
+        },{
           path: 'daily-train-ticket',
           component: () => import('../views/main/business/daily-train-ticket.vue')
         },{
