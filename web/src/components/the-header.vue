@@ -2,7 +2,7 @@
   <a-layout-header class="header">
     <div class="logo">
       <router-link to="/welcome" style="color: white; font-size: 18px">
-        彰广12306控台
+        彰广12306
       </router-link>
     </div>
     <div style="float: right; color: white;">
