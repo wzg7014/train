@@ -1,40 +1,31 @@
 {
-  "currentState": "memory_saved",
+  "currentState": "role_activated_with_memory",
   "stateHistory": [
     {
       "from": "initial",
       "command": "init",
-      "timestamp": "2025-07-08T01:26:29.714Z",
+      "timestamp": "2025-07-09T12:13:49.296Z",
       "args": [
         {
-          "workingDirectory": "W:/Java Study/@Devcode/train"
+          "workingDirectory": "W:/Java Study/@Devcode/train",
+          "ideType": "cursor"
         }
       ]
     },
     {
       "from": "initialized",
       "command": "welcome",
-      "timestamp": "2025-07-08T01:26:34.338Z",
+      "timestamp": "2025-07-09T12:13:54.018Z",
       "args": []
     },
     {
       "from": "role_discovery",
       "command": "action",
-      "timestamp": "2025-07-08T01:26:38.997Z",
+      "timestamp": "2025-07-09T12:13:59.101Z",
       "args": [
         "java-leader"
       ]
-    },
-    {
-      "from": "role_activated_with_memory",
-      "command": "remember",
-      "timestamp": "2025-07-08T06:00:35.119Z",
-      "args": [
-        "## Windows PowerShell命令行使用规则\n\n### 环境约束\n- 用户使用Windows环境，主要使用PowerShell\n- 避免使用Linux/Mac特有的命令语法\n- 所有命令执行都要考虑Windows兼容性\n\n### 常用命令对照表\n**文件操作**\n- 列出文件: `Get-ChildItem` 或 `dir` (避免使用 `ls`)\n- 查看文件: `Get-Content file.txt` 或 `type file.txt` (避免使用 `cat`)\n- 删除文件: `Remove-Item` 或 `del` (避免使用 `rm`)\n- 复制文件: `Copy-Item` 或 `copy` (避免使用 `cp`)\n\n**路径处理**\n- 使用反斜杠 `\\` 作为路径分隔符\n- 或使用PowerShell兼容的正斜杠 `/`\n- 避免使用纯Linux路径语法\n\n**Java/Maven开发**\n- `java -version` ✅\n- `mvn clean compile` ✅  \n- `mvn spring-boot:run` ✅\n- 避免使用 `./mvnw` 等Unix特有语法\n\n**网络工具**\n- 使用 `Invoke-WebRequest` 替代 `curl`\n- 使用 `Test-NetConnection` 替代 `ping` (某些场景)\n\n### 执行策略\n1. 优先使用跨平台兼容的命令\n2. 其次使用PowerShell原生命令\n3. 最后考虑CMD命令作为备选\n4. 绝对避免纯Linux/Mac命令",
-        "--tags",
-        "windows powershell 命令行 环境配置 开发规范"
-      ]
     }
   ],
-  "lastUpdated": "2025-07-08T06:00:35.140Z"
+  "lastUpdated": "2025-07-09T12:13:59.125Z"
 }

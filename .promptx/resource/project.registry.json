@@ -4,8 +4,8 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-07-08T01:26:29.719Z",
-    "updatedAt": "2025-07-08T01:26:29.731Z",
+    "createdAt": "2025-07-09T12:13:49.317Z",
+    "updatedAt": "2025-07-09T12:13:49.326Z",
     "resourceCount": 5
   },
   "resources": [
@@ -17,11 +17,9 @@
       "description": "专业角色，提供特定领域的专业能力",
       "reference": "@project://.promptx/resource/role/java-leader/java-leader.role.md",
       "metadata": {
-        "createdAt": "2025-07-08T01:26:29.724Z",
-        "updatedAt": "2025-07-08T01:26:29.724Z",
-        "scannedAt": "2025-07-08T01:26:29.724Z",
-        "filePath": "W:\\Java Study\\@Devcode\\train\\.promptx\\resource\\role\\java-leader\\java-leader.role.md",
-        "fileType": "role"
+        "createdAt": "2025-07-09T12:13:49.319Z",
+        "updatedAt": "2025-07-09T12:13:49.319Z",
+        "scannedAt": "2025-07-09T12:13:49.319Z"
       }
     },
     {
@@ -32,11 +30,9 @@
       "description": "思维模式，指导AI的思考方式",
       "reference": "@project://.promptx/resource/role/java-leader/thought/java-leadership.thought.md",
       "metadata": {
-        "createdAt": "2025-07-08T01:26:29.726Z",
-        "updatedAt": "2025-07-08T01:26:29.726Z",
-        "scannedAt": "2025-07-08T01:26:29.726Z",
-        "filePath": "W:\\Java Study\\@Devcode\\train\\.promptx\\resource\\role\\java-leader\\thought\\java-leadership.thought.md",
-        "fileType": "thought"
+        "createdAt": "2025-07-09T12:13:49.321Z",
+        "updatedAt": "2025-07-09T12:13:49.321Z",
+        "scannedAt": "2025-07-09T12:13:49.321Z"
       }
     },
     {
@@ -47,11 +43,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/code-review-guidance.execution.md",
       "metadata": {
-        "createdAt": "2025-07-08T01:26:29.728Z",
-        "updatedAt": "2025-07-08T01:26:29.728Z",
-        "scannedAt": "2025-07-08T01:26:29.728Z",
-        "filePath": "W:\\Java Study\\@Devcode\\train\\.promptx\\resource\\role\\java-leader\\execution\\code-review-guidance.execution.md",
-        "fileType": "execution"
+        "createdAt": "2025-07-09T12:13:49.322Z",
+        "updatedAt": "2025-07-09T12:13:49.322Z",
+        "scannedAt": "2025-07-09T12:13:49.322Z"
       }
     },
     {
@@ -62,11 +56,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/debugging-mentorship.execution.md",
       "metadata": {
-        "createdAt": "2025-07-08T01:26:29.728Z",
-        "updatedAt": "2025-07-08T01:26:29.728Z",
-        "scannedAt": "2025-07-08T01:26:29.728Z",
-        "filePath": "W:\\Java Study\\@Devcode\\train\\.promptx\\resource\\role\\java-leader\\execution\\debugging-mentorship.execution.md",
-        "fileType": "execution"
+        "createdAt": "2025-07-09T12:13:49.323Z",
+        "updatedAt": "2025-07-09T12:13:49.323Z",
+        "scannedAt": "2025-07-09T12:13:49.323Z"
       }
     },
     {
@@ -77,11 +69,9 @@
       "description": "知识库，提供专业知识和信息",
       "reference": "@project://.promptx/resource/role/java-leader/knowledge/java-leader-expertise.knowledge.md",
       "metadata": {
-        "createdAt": "2025-07-08T01:26:29.730Z",
-        "updatedAt": "2025-07-08T01:26:29.730Z",
-        "scannedAt": "2025-07-08T01:26:29.730Z",
-        "filePath": "W:\\Java Study\\@Devcode\\train\\.promptx\\resource\\role\\java-leader\\knowledge\\java-leader-expertise.knowledge.md",
-        "fileType": "knowledge"
+        "createdAt": "2025-07-09T12:13:49.325Z",
+        "updatedAt": "2025-07-09T12:13:49.325Z",
+        "scannedAt": "2025-07-09T12:13:49.325Z"
       }
     }
   ],
