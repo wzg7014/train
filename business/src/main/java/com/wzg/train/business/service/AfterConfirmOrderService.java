@@ -8,6 +8,7 @@ import com.wzg.train.business.req.ConfirmOrderTicketReq;
 import com.wzg.train.common.context.LoginMemberContext;
 import com.wzg.train.common.req.MemberTicketReq;
 import com.wzg.train.common.resp.CommonResp;
+import com.wzg.train.common.utils.SnowUtil;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -100,8 +101,8 @@ public class AfterConfirmOrderService {
             );
             //调用会员服务接口，为会员增加一张车票
             MemberTicketReq memberTicketReq = new MemberTicketReq();
-            memberTicketReq.setId(LoginMemberContext.getId());
-            memberTicketReq.setMemberId(dailyTrainTicket.getId());
+            memberTicketReq.setId(SnowUtil.getSnowflakeNextId());
+            memberTicketReq.setMemberId(LoginMemberContext.getId());
             memberTicketReq.setPassengerId(tickets.get(j).getPassengerId());
             memberTicketReq.setPassengerName(tickets.get(j).getPassengerName());
             memberTicketReq.setTrainDate(dailyTrainTicket.getDate());
