@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wzg.train.common.req.MemberTicketReq;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.common.utils.SnowUtil;
 import com.wzg.train.member.domain.Ticket;
@@ -28,19 +29,13 @@ public class TicketService {
     @Resource
     private TicketMapper ticketMapper;
 
-    public void save(TicketSaveReq req){
+    public void save(MemberTicketReq req){
         DateTime now = DateTime.now();
         Ticket ticket = BeanUtil.copyProperties(req, Ticket.class);
-        if (ObjectUtil.isNull(ticket.getId())){
-            ticket.setId(SnowUtil.getSnowflakeNextId());
-            ticket.setCreateTime(now);
-            ticket.setUpdateTime(now);
-            ticketMapper.insert(ticket);
-        }else {
-            ticket.setUpdateTime(now);
-            ticketMapper.updateByPrimaryKey(ticket);
-        }
-
+        ticket.setId(SnowUtil.getSnowflakeNextId());
+        ticket.setCreateTime(now);
+        ticket.setUpdateTime(now);
+        ticketMapper.insert(ticket);
     }
 
     public PageResp<TicketQueryResp> queryList(TicketQueryReq req){
