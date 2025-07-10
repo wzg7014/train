@@ -4,8 +4,8 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-07-09T12:13:49.317Z",
-    "updatedAt": "2025-07-09T12:13:49.326Z",
+    "createdAt": "2025-07-10T06:22:35.344Z",
+    "updatedAt": "2025-07-10T06:22:35.356Z",
     "resourceCount": 5
   },
   "resources": [
@@ -17,9 +17,9 @@
       "description": "专业角色，提供特定领域的专业能力",
       "reference": "@project://.promptx/resource/role/java-leader/java-leader.role.md",
       "metadata": {
-        "createdAt": "2025-07-09T12:13:49.319Z",
-        "updatedAt": "2025-07-09T12:13:49.319Z",
-        "scannedAt": "2025-07-09T12:13:49.319Z"
+        "createdAt": "2025-07-10T06:22:35.348Z",
+        "updatedAt": "2025-07-10T06:22:35.348Z",
+        "scannedAt": "2025-07-10T06:22:35.347Z"
       }
     },
     {
@@ -30,9 +30,9 @@
       "description": "思维模式，指导AI的思考方式",
       "reference": "@project://.promptx/resource/role/java-leader/thought/java-leadership.thought.md",
       "metadata": {
-        "createdAt": "2025-07-09T12:13:49.321Z",
-        "updatedAt": "2025-07-09T12:13:49.321Z",
-        "scannedAt": "2025-07-09T12:13:49.321Z"
+        "createdAt": "2025-07-10T06:22:35.350Z",
+        "updatedAt": "2025-07-10T06:22:35.350Z",
+        "scannedAt": "2025-07-10T06:22:35.350Z"
       }
     },
     {
@@ -43,9 +43,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/code-review-guidance.execution.md",
       "metadata": {
-        "createdAt": "2025-07-09T12:13:49.322Z",
-        "updatedAt": "2025-07-09T12:13:49.322Z",
-        "scannedAt": "2025-07-09T12:13:49.322Z"
+        "createdAt": "2025-07-10T06:22:35.352Z",
+        "updatedAt": "2025-07-10T06:22:35.352Z",
+        "scannedAt": "2025-07-10T06:22:35.352Z"
       }
     },
     {
@@ -56,9 +56,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/debugging-mentorship.execution.md",
       "metadata": {
-        "createdAt": "2025-07-09T12:13:49.323Z",
-        "updatedAt": "2025-07-09T12:13:49.323Z",
-        "scannedAt": "2025-07-09T12:13:49.323Z"
+        "createdAt": "2025-07-10T06:22:35.353Z",
+        "updatedAt": "2025-07-10T06:22:35.353Z",
+        "scannedAt": "2025-07-10T06:22:35.353Z"
       }
     },
     {
@@ -69,9 +69,9 @@
       "description": "知识库，提供专业知识和信息",
       "reference": "@project://.promptx/resource/role/java-leader/knowledge/java-leader-expertise.knowledge.md",
       "metadata": {
-        "createdAt": "2025-07-09T12:13:49.325Z",
-        "updatedAt": "2025-07-09T12:13:49.325Z",
-        "scannedAt": "2025-07-09T12:13:49.325Z"
+        "createdAt": "2025-07-10T06:22:35.355Z",
+        "updatedAt": "2025-07-10T06:22:35.355Z",
+        "scannedAt": "2025-07-10T06:22:35.355Z"
       }
     }
   ],
