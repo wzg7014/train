@@ -22,3 +22,6 @@ mybatis:
 logging:
   level:
     com.wzg.train.member.mapper: TRACE
+
+test:
+  nacos: member
