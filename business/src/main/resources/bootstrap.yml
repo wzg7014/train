@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: business
+  profiles:
+    #启动环境，nacos会根据环境读不同的配置dataId: business-dev.yml
+    active: dev
+    #注册中心的名字
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: train
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: train
