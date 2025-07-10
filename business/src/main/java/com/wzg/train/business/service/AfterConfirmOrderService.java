@@ -1,8 +1,13 @@
 package com.wzg.train.business.service;
 
 import com.wzg.train.business.domain.*;
+import com.wzg.train.business.feign.MemberFeign;
 import com.wzg.train.business.mapper.DailyTrainSeatMapper;
 import com.wzg.train.business.mapper.cust.DailyTrainTicketMapperCust;
+import com.wzg.train.business.req.ConfirmOrderTicketReq;
+import com.wzg.train.common.context.LoginMemberContext;
+import com.wzg.train.common.req.MemberTicketReq;
+import com.wzg.train.common.resp.CommonResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +28,9 @@ public class AfterConfirmOrderService {
     @Resource
     private DailyTrainTicketMapperCust dailyTrainTicketMapperCust;
 
+    @Resource
+    private MemberFeign memberFeign;
+
 
     /**
      *选中座位后事务处理
@@ -32,8 +40,9 @@ public class AfterConfirmOrderService {
      * 更新确定订单为成功
      */
     @Transactional
-    public void afterDoConfirm(DailyTrainTicket dailyTrainTicket, List<DailyTrainSeat> finaSeatList){
-        for (DailyTrainSeat dailyTrainSeat : finaSeatList) {
+    public void afterDoConfirm(DailyTrainTicket dailyTrainTicket, List<DailyTrainSeat> finaSeatList, List<ConfirmOrderTicketReq> tickets){
+        for (int j = 0; j < finaSeatList.size(); j++) {
+            DailyTrainSeat dailyTrainSeat = finaSeatList.get(j);
             DailyTrainSeat seatForUpdate = new DailyTrainSeat();
             seatForUpdate.setId(dailyTrainSeat.getId());
             seatForUpdate.setSell(dailyTrainSeat.getSell());
@@ -62,7 +71,7 @@ public class AfterConfirmOrderService {
             Integer minStartIndex = 0;
             for (int i = startIndex - 1; i >= 0; i--) {
                 char aChar = chars[i];
-                if (aChar == '1'){
+                if (aChar == '1') {
                     minStartIndex = i + 1;
                     break;
                 }
@@ -72,7 +81,7 @@ public class AfterConfirmOrderService {
             Integer maxEndIndex = seatForUpdate.getSell().length();
             for (int i = endIndex; i < seatForUpdate.getSell().length(); i++) {
                 char aChar = chars[i];
-                if (aChar == '1'){
+                if (aChar == '1') {
                     maxEndIndex = i;
                     break;
                 }
@@ -89,6 +98,27 @@ public class AfterConfirmOrderService {
                     minEndIndex,
                     maxEndIndex
             );
+            //调用会员服务接口，为会员增加一张车票
+            MemberTicketReq memberTicketReq = new MemberTicketReq();
+            memberTicketReq.setId(LoginMemberContext.getId());
+            memberTicketReq.setMemberId(dailyTrainTicket.getId());
+            memberTicketReq.setPassengerId(tickets.get(j).getPassengerId());
+            memberTicketReq.setPassengerName(tickets.get(j).getPassengerName());
+            memberTicketReq.setTrainDate(dailyTrainTicket.getDate());
+            memberTicketReq.setTrainCode(dailyTrainSeat.getTrainCode());
+            memberTicketReq.setCarriageIndex(dailyTrainSeat.getCarriageIndex());
+            memberTicketReq.setSeatRow(dailyTrainSeat.getRow());
+            memberTicketReq.setSeatCol(dailyTrainSeat.getCol());
+            memberTicketReq.setStartStation(dailyTrainTicket.getStart());
+            memberTicketReq.setStartTime(dailyTrainTicket.getStartTime());
+            memberTicketReq.setEndStation(dailyTrainTicket.getEnd());
+            memberTicketReq.setEndTime(dailyTrainTicket.getEndTime());
+            memberTicketReq.setSeatType(dailyTrainSeat.getSeatType());
+            memberTicketReq.setCreateTime(dailyTrainTicket.getStartTime());
+            memberTicketReq.setUpdateTime(dailyTrainTicket.getUpdateTime());
+            CommonResp<Object> commonResp = memberFeign.save(memberTicketReq);
+            LOG.info("调用member，返回：{}", commonResp);
+
         }
     }
 }
