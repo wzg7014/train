@@ -25,16 +25,16 @@
 </template>
 
 <script>
-  import {defineComponent, onMounted, ref} from 'vue';
-  import {notification} from "ant-design-vue";
-  import axios from "axios";
+import { defineComponent, ref, onMounted } from 'vue';
+import {notification} from "ant-design-vue";
+import axios from "axios";
 
-  export default defineComponent({
+export default defineComponent({
   name: "confirm-order-view",
   setup() {
     const CONFIRM_ORDER_STATUS_ARRAY = window.CONFIRM_ORDER_STATUS_ARRAY;
     const visible = ref(false);
-    const confirmOrder = ref({
+    let confirmOrder = ref({
       id: undefined,
       memberId: undefined,
       date: undefined,
@@ -56,46 +56,46 @@
     });
     let loading = ref(false);
     const columns = [
-    {
-      title: '会员id',
-      dataIndex: 'memberId',
-      key: 'memberId',
-    },
-    {
-      title: '日期',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: '车次编号',
-      dataIndex: 'trainCode',
-      key: 'trainCode',
-    },
-    {
-      title: '出发站',
-      dataIndex: 'start',
-      key: 'start',
-    },
-    {
-      title: '到达站',
-      dataIndex: 'end',
-      key: 'end',
-    },
-    {
-      title: '余票ID',
-      dataIndex: 'dailyTrainTicketId',
-      key: 'dailyTrainTicketId',
-    },
-    {
-      title: '车票',
-      dataIndex: 'tickets',
-      key: 'tickets',
-    },
-    {
-      title: '订单状态',
-      dataIndex: 'status',
-      key: 'status',
-    },
+      {
+        title: '会员id',
+        dataIndex: 'memberId',
+        key: 'memberId',
+      },
+      {
+        title: '日期',
+        dataIndex: 'date',
+        key: 'date',
+      },
+      {
+        title: '车次编号',
+        dataIndex: 'trainCode',
+        key: 'trainCode',
+      },
+      {
+        title: '出发站',
+        dataIndex: 'start',
+        key: 'start',
+      },
+      {
+        title: '到达站',
+        dataIndex: 'end',
+        key: 'end',
+      },
+      {
+        title: '余票ID',
+        dataIndex: 'dailyTrainTicketId',
+        key: 'dailyTrainTicketId',
+      },
+      {
+        title: '车票',
+        dataIndex: 'tickets',
+        key: 'tickets',
+      },
+      {
+        title: '订单状态',
+        dataIndex: 'status',
+        key: 'status',
+      },
     ];
 
 

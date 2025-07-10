@@ -1,7 +1,9 @@
 package com.wzg.train.business.service;
 
 import com.wzg.train.business.domain.*;
+import com.wzg.train.business.enums.ConfirmOrderStatusEnum;
 import com.wzg.train.business.feign.MemberFeign;
+import com.wzg.train.business.mapper.ConfirmOrderMapper;
 import com.wzg.train.business.mapper.DailyTrainSeatMapper;
 import com.wzg.train.business.mapper.cust.DailyTrainTicketMapperCust;
 import com.wzg.train.business.req.ConfirmOrderTicketReq;
@@ -32,6 +34,9 @@ public class AfterConfirmOrderService {
     @Resource
     private MemberFeign memberFeign;
 
+    @Resource
+    private ConfirmOrderMapper confirmOrderMapper;
+
 
     /**
      *选中座位后事务处理
@@ -41,7 +46,8 @@ public class AfterConfirmOrderService {
      * 更新确定订单为成功
      */
     @Transactional
-    public void afterDoConfirm(DailyTrainTicket dailyTrainTicket, List<DailyTrainSeat> finaSeatList, List<ConfirmOrderTicketReq> tickets){
+    public void afterDoConfirm(DailyTrainTicket dailyTrainTicket, List<DailyTrainSeat> finaSeatList, List<ConfirmOrderTicketReq> tickets,
+                               ConfirmOrder confirmOrder){
         for (int j = 0; j < finaSeatList.size(); j++) {
             DailyTrainSeat dailyTrainSeat = finaSeatList.get(j);
             DailyTrainSeat seatForUpdate = new DailyTrainSeat();
@@ -120,6 +126,10 @@ public class AfterConfirmOrderService {
             CommonResp<Object> commonResp = memberFeign.save(memberTicketReq);
             LOG.info("调用member，返回：{}", commonResp);
 
+            ConfirmOrder confirmOrderStatus = new ConfirmOrder();
+            confirmOrderStatus.setId(confirmOrder.getId());
+            confirmOrderStatus.setStatus(ConfirmOrderStatusEnum.SUCCESS.getCode());
+            confirmOrderMapper.updateByPrimaryKeySelective(confirmOrderStatus);
         }
     }
 }

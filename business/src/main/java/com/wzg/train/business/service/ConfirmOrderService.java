@@ -47,7 +47,7 @@ public class ConfirmOrderService {
     @Resource
     private DailyTrainTicketService dailyTrainTicketService;
 
-   @Resource
+    @Resource
     private DailyTrainCarriageService dailyTrainCarriageService;
 
     @Resource
@@ -55,6 +55,20 @@ public class ConfirmOrderService {
 
     @Resource
     private AfterConfirmOrderService afterConfirmOrderService;
+
+    public void save(ConfirmOrderDoReq req) {
+        DateTime now = DateTime.now();
+        ConfirmOrder confirmOrder = BeanUtil.copyProperties(req, ConfirmOrder.class);
+        if (ObjectUtil.isNull(confirmOrder.getId())) {
+            confirmOrder.setId(SnowUtil.getSnowflakeNextId());
+            confirmOrder.setCreateTime(now);
+            confirmOrder.setUpdateTime(now);
+            confirmOrderMapper.insert(confirmOrder);
+        } else {
+            confirmOrder.setUpdateTime(now);
+            confirmOrderMapper.updateByPrimaryKey(confirmOrder);
+        }
+    }
 
     public PageResp<ConfirmOrderQueryResp> queryList(ConfirmOrderQueryReq req){
         ConfirmOrderExample confirmOrderExample = new ConfirmOrderExample();
@@ -174,7 +188,7 @@ public class ConfirmOrderService {
         // 余票详情表修改余票
         // 为会员增加购票记录
         // 更新确定订单为成功
-        afterConfirmOrderService.afterDoConfirm(dailyTrainTicket, finaSeatList, tickets);
+        afterConfirmOrderService.afterDoConfirm(dailyTrainTicket, finaSeatList, tickets, confirmOrder);
 
     }
 
