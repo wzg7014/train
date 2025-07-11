@@ -4,8 +4,8 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-07-11T05:03:03.634Z",
-    "updatedAt": "2025-07-11T05:03:03.647Z",
+    "createdAt": "2025-07-11T06:53:35.750Z",
+    "updatedAt": "2025-07-11T06:53:35.753Z",
     "resourceCount": 5
   },
   "resources": [
@@ -17,9 +17,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/code-review-guidance.execution.md",
       "metadata": {
-        "createdAt": "2025-07-11T05:03:03.639Z",
-        "updatedAt": "2025-07-11T05:03:03.639Z",
-        "scannedAt": "2025-07-11T05:03:03.638Z",
+        "createdAt": "2025-07-11T06:53:35.752Z",
+        "updatedAt": "2025-07-11T06:53:35.752Z",
+        "scannedAt": "2025-07-11T06:53:35.752Z",
         "path": "role/java-leader/execution/code-review-guidance.execution.md"
       }
     },
@@ -31,9 +31,9 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/debugging-mentorship.execution.md",
       "metadata": {
-        "createdAt": "2025-07-11T05:03:03.642Z",
-        "updatedAt": "2025-07-11T05:03:03.642Z",
-        "scannedAt": "2025-07-11T05:03:03.642Z",
+        "createdAt": "2025-07-11T06:53:35.752Z",
+        "updatedAt": "2025-07-11T06:53:35.752Z",
+        "scannedAt": "2025-07-11T06:53:35.752Z",
         "path": "role/java-leader/execution/debugging-mentorship.execution.md"
       }
     },
@@ -45,9 +45,9 @@
       "description": "专业角色，提供特定领域的专业能力",
       "reference": "@project://.promptx/resource/role/java-leader/java-leader.role.md",
       "metadata": {
-        "createdAt": "2025-07-11T05:03:03.644Z",
-        "updatedAt": "2025-07-11T05:03:03.644Z",
-        "scannedAt": "2025-07-11T05:03:03.644Z",
+        "createdAt": "2025-07-11T06:53:35.753Z",
+        "updatedAt": "2025-07-11T06:53:35.753Z",
+        "scannedAt": "2025-07-11T06:53:35.753Z",
         "path": "role/java-leader/java-leader.role.md"
       }
     },
@@ -59,9 +59,9 @@
       "description": "知识库，提供专业知识和信息",
       "reference": "@project://.promptx/resource/role/java-leader/knowledge/java-leader-expertise.knowledge.md",
       "metadata": {
-        "createdAt": "2025-07-11T05:03:03.645Z",
-        "updatedAt": "2025-07-11T05:03:03.645Z",
-        "scannedAt": "2025-07-11T05:03:03.645Z",
+        "createdAt": "2025-07-11T06:53:35.753Z",
+        "updatedAt": "2025-07-11T06:53:35.753Z",
+        "scannedAt": "2025-07-11T06:53:35.753Z",
         "path": "role/java-leader/knowledge/java-leader-expertise.knowledge.md"
       }
     },
@@ -73,9 +73,9 @@
       "description": "思维模式，指导AI的思考方式",
       "reference": "@project://.promptx/resource/role/java-leader/thought/java-leadership.thought.md",
       "metadata": {
-        "createdAt": "2025-07-11T05:03:03.646Z",
-        "updatedAt": "2025-07-11T05:03:03.646Z",
-        "scannedAt": "2025-07-11T05:03:03.646Z",
+        "createdAt": "2025-07-11T06:53:35.753Z",
+        "updatedAt": "2025-07-11T06:53:35.753Z",
+        "scannedAt": "2025-07-11T06:53:35.753Z",
         "path": "role/java-leader/thought/java-leadership.thought.md"
       }
     }
