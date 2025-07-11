@@ -18,6 +18,14 @@ spring:
       host: r-uf6ljbcdaxobsifyctpd.redis.rds.aliyuncs.com
       port: 6379
       password: Redis000
+  cache:
+    type: redis
+    redis:
+      use-key-prefix: true
+      key-prefix: train_cache_
+      cache-null-values: true
+      time-to-live: 60s
+
 
 # mybatis xml路径
 mybatis:
