@@ -4,37 +4,11 @@
   "metadata": {
     "version": "2.0.0",
     "description": "project 级资源注册表",
-    "createdAt": "2025-07-10T06:22:35.344Z",
-    "updatedAt": "2025-07-10T06:22:35.356Z",
+    "createdAt": "2025-07-11T05:03:03.634Z",
+    "updatedAt": "2025-07-11T05:03:03.647Z",
     "resourceCount": 5
   },
   "resources": [
-    {
-      "id": "java-leader",
-      "source": "project",
-      "protocol": "role",
-      "name": "Java Leader 角色",
-      "description": "专业角色，提供特定领域的专业能力",
-      "reference": "@project://.promptx/resource/role/java-leader/java-leader.role.md",
-      "metadata": {
-        "createdAt": "2025-07-10T06:22:35.348Z",
-        "updatedAt": "2025-07-10T06:22:35.348Z",
-        "scannedAt": "2025-07-10T06:22:35.347Z"
-      }
-    },
-    {
-      "id": "java-leadership",
-      "source": "project",
-      "protocol": "thought",
-      "name": "Java Leadership 思维模式",
-      "description": "思维模式，指导AI的思考方式",
-      "reference": "@project://.promptx/resource/role/java-leader/thought/java-leadership.thought.md",
-      "metadata": {
-        "createdAt": "2025-07-10T06:22:35.350Z",
-        "updatedAt": "2025-07-10T06:22:35.350Z",
-        "scannedAt": "2025-07-10T06:22:35.350Z"
-      }
-    },
     {
       "id": "code-review-guidance",
       "source": "project",
@@ -43,9 +17,10 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/code-review-guidance.execution.md",
       "metadata": {
-        "createdAt": "2025-07-10T06:22:35.352Z",
-        "updatedAt": "2025-07-10T06:22:35.352Z",
-        "scannedAt": "2025-07-10T06:22:35.352Z"
+        "createdAt": "2025-07-11T05:03:03.639Z",
+        "updatedAt": "2025-07-11T05:03:03.639Z",
+        "scannedAt": "2025-07-11T05:03:03.638Z",
+        "path": "role/java-leader/execution/code-review-guidance.execution.md"
       }
     },
     {
@@ -56,9 +31,24 @@
       "description": "执行模式，定义具体的行为模式",
       "reference": "@project://.promptx/resource/role/java-leader/execution/debugging-mentorship.execution.md",
       "metadata": {
-        "createdAt": "2025-07-10T06:22:35.353Z",
-        "updatedAt": "2025-07-10T06:22:35.353Z",
-        "scannedAt": "2025-07-10T06:22:35.353Z"
+        "createdAt": "2025-07-11T05:03:03.642Z",
+        "updatedAt": "2025-07-11T05:03:03.642Z",
+        "scannedAt": "2025-07-11T05:03:03.642Z",
+        "path": "role/java-leader/execution/debugging-mentorship.execution.md"
+      }
+    },
+    {
+      "id": "java-leader",
+      "source": "project",
+      "protocol": "role",
+      "name": "Java Leader 角色",
+      "description": "专业角色，提供特定领域的专业能力",
+      "reference": "@project://.promptx/resource/role/java-leader/java-leader.role.md",
+      "metadata": {
+        "createdAt": "2025-07-11T05:03:03.644Z",
+        "updatedAt": "2025-07-11T05:03:03.644Z",
+        "scannedAt": "2025-07-11T05:03:03.644Z",
+        "path": "role/java-leader/java-leader.role.md"
       }
     },
     {
@@ -69,19 +59,34 @@
       "description": "知识库，提供专业知识和信息",
       "reference": "@project://.promptx/resource/role/java-leader/knowledge/java-leader-expertise.knowledge.md",
       "metadata": {
-        "createdAt": "2025-07-10T06:22:35.355Z",
-        "updatedAt": "2025-07-10T06:22:35.355Z",
-        "scannedAt": "2025-07-10T06:22:35.355Z"
+        "createdAt": "2025-07-11T05:03:03.645Z",
+        "updatedAt": "2025-07-11T05:03:03.645Z",
+        "scannedAt": "2025-07-11T05:03:03.645Z",
+        "path": "role/java-leader/knowledge/java-leader-expertise.knowledge.md"
+      }
+    },
+    {
+      "id": "java-leadership",
+      "source": "project",
+      "protocol": "thought",
+      "name": "Java Leadership 思维模式",
+      "description": "思维模式，指导AI的思考方式",
+      "reference": "@project://.promptx/resource/role/java-leader/thought/java-leadership.thought.md",
+      "metadata": {
+        "createdAt": "2025-07-11T05:03:03.646Z",
+        "updatedAt": "2025-07-11T05:03:03.646Z",
+        "scannedAt": "2025-07-11T05:03:03.646Z",
+        "path": "role/java-leader/thought/java-leadership.thought.md"
       }
     }
   ],
   "stats": {
     "totalResources": 5,
     "byProtocol": {
-      "role": 1,
-      "thought": 1,
       "execution": 2,
-      "knowledge": 1
+      "role": 1,
+      "knowledge": 1,
+      "thought": 1
     },
     "bySource": {
       "project": 5
