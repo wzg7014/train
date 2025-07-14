@@ -14,3 +14,14 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: train
+
+#事务组名称  一个项目多个模板配置成同一个事务组
+seata:
+  tx-service-group: train_group
+  #事务组和seata集群做关联
+  service:
+    vgroup-mapping:
+      train_group: default
+    #seata集群对应的机器
+    grouplist:
+      default: 127.0.0.1:8091
