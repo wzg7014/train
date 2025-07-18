@@ -27,6 +27,7 @@ import com.wzg.train.business.resp.ConfirmOrderQueryResp;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.wzg.train.common.exception.BusinessExceptionEnum.BUSINESS_TRAIN_CARRIAGE_INDEX_UNIQUE_ERROR;
 import static com.wzg.train.common.exception.BusinessExceptionEnum.CONFIRM_ORDER_TICKET_COUNT_ERROR;
 
 @Service
@@ -58,7 +58,7 @@ public class ConfirmOrderService {
     @Resource
     private AfterConfirmOrderService afterConfirmOrderService;
 
-    @Resource
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
     public void save(ConfirmOrderDoReq req) {
@@ -102,11 +102,11 @@ public class ConfirmOrderService {
     }
 
     public void doConfirm(ConfirmOrderDoReq req){
-        String key = req.getDate() + "-" + req.getTrainCode();
-        Boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(key, key, 5, TimeUnit.SECONDS);
-        if (setIfAbsent){
+        String lockKey = req.getDate() + "-" + req.getTrainCode();
+        Boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(lockKey, lockKey, 5, TimeUnit.SECONDS);
+        if (setIfAbsent) {
             LOG.info("恭喜，抢到锁了");
-        }else {
+        } else {
             LOG.info("很遗憾，没有抢到锁");
             throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
         }
@@ -146,7 +146,7 @@ public class ConfirmOrderService {
         //比如选择的是A1,B1,C1，则偏移值为：[0,1,2]
         //判断是否有选座
         ConfirmOrderTicketReq ticket0 = tickets.get(0);
-        if (StrUtil.isNotBlank(ticket0.getSeat())){
+        if (StrUtil.isNotBlank(ticket0.getSeat())) {
             LOG.info("本次购票有选座");
             //查处本次选座的座位类型有哪些列，用于计算所选座位与第一个座位的偏移值
             List<SeatColEnum> colEnumList = SeatColEnum.getColsByType(ticket0.getSeatTypeCode());
@@ -181,7 +181,7 @@ public class ConfirmOrderService {
                     offsetList,
                     dailyTrainTicket.getStartIndex(),
                     dailyTrainTicket.getEndIndex());
-        }else {
+        } else {
             LOG.info("本次购票没有选座");
             for (ConfirmOrderTicketReq ticketReq : tickets) {
                 getSeat(finaSeatList,
@@ -208,6 +208,13 @@ public class ConfirmOrderService {
             LOG.info("保存购票信息失败", e);
             throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_EXCEPTION);
         }
+
+        // 删除分布式锁
+        LOG.info("购票流程结束，释放锁！");
+        redisTemplate.delete(lockKey);
+
+
+
 
     }
 
