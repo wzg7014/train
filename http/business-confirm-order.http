@@ -1,0 +1,19 @@
+POST http://localhost:8000/business/confirm-order/do
+Content-Type: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3NTI4MDUwOTUsIm1vYmlsZSI6IjEzMDAwMDAwMDAwIiwiaWQiOjE5Mzk1MTkzNzM5OTU4MDY3MjAsImV4cCI6MTc1Mjg5MTQ5NSwiaWF0IjoxNzUyODA1MDk1fQ.z8r-r9o-UMrtBxzhPD-tk4sPowTKf6RQs_l76TyiQMU
+
+{
+  "dailyTrainTicketId":1942835065327325184,
+  "date":1752422400000,
+  "end":"火星",
+  "start":"地球",
+  "tickets":[{
+    "passengerId":1942425214562471936,
+    "passengerIdCard":"54734735754546885",
+    "passengerName":"王彰广",
+    "passengerType":"2",
+    "seatTypeCode":"2"
+    }],
+    "trainCode":"G1"
+}
+###

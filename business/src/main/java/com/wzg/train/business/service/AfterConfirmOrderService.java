@@ -135,10 +135,10 @@ public class AfterConfirmOrderService {
             confirmOrderStatus.setStatus(ConfirmOrderStatusEnum.SUCCESS.getCode());
             confirmOrderMapper.updateByPrimaryKeySelective(confirmOrderStatus);
 
-            //模拟调用方出现异常
-            if (1 == 1){
-                throw new Exception("测试异常");
-            }
+//            //模拟调用方出现异常
+//            if (1 == 1){
+//                throw new Exception("测试异常");
+//            }
         }
     }
 }
