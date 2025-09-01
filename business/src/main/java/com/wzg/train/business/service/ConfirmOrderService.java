@@ -106,7 +106,7 @@ public class ConfirmOrderService {
         confirmOrderMapper.deleteByPrimaryKey(id);
     }
 
-    @SentinelResource(value = "doConfirm", blockHandler = "doConfirmBlock")
+//    @SentinelResource(value = "doConfirm", blockHandler = "doConfirmBlock")
     public void doConfirm(ConfirmOrderDoReq req){
         String lockKey = req.getDate() + "-" + req.getTrainCode();
         Boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(lockKey, lockKey, 5, TimeUnit.SECONDS);
@@ -440,7 +440,7 @@ public class ConfirmOrderService {
 
     private void doConfirmBlock(ConfirmOrderDoReq confirmOrderDoReq, BlockException e) {
         LOG.info("当前购票被限流:{}", confirmOrderDoReq);
-        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
+        throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_FLOW_EXCEPTION);
     }
 
 
