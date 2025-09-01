@@ -21,13 +21,15 @@ spring:
         dashboard: 127.0.0.1:18080
       #sentinel + nacos  将限流规则持久化到nacos
       datasource:
-        nacos:
+        flow:
           nacos:
             server-addr: 127.0.0.1:8848
             namespace: train
-            group-id: TRAIN_GROUP
-            data-id: sentinel
+            group-id: DEFAULT_GROUP
+            data-id: sentinel-business-flow
             rule-type: flow
+      # 流控模式是链路时，必须关闭这个配置，默认是true，为true时可以在控台-簇点链路界面看到所有请求路径
+      web-context-unify: false
 
 #事务组名称  一个项目多个模板配置成同一个事务组
 seata:
