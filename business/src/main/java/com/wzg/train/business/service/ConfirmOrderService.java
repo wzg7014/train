@@ -237,11 +237,14 @@ public class ConfirmOrderService {
                 LOG.info("保存购票信息失败", e);
                 throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_EXCEPTION);
             }
-             LOG.info("购票流程结束，释放锁！lockKey：{}", lockKey);
-             redisTemplate.delete(lockKey);
+//             LOG.info("购票流程结束，释放锁！lockKey：{}", lockKey);
+//             redisTemplate.delete(lockKey);
 //        } catch (InterruptedException e){
 //            LOG.info("购票异常", e);
         }finally {
+            // 最后，必须要释放锁
+            LOG.info("购票流程结束，释放锁！lockKey：{}", lockKey);
+            redisTemplate.delete(lockKey);
 //            // 删除分布式锁
 //            LOG.info("购票流程结束，释放锁！");
 //            if (null != lock && lock.isHeldByCurrentThread()) {
