@@ -37,5 +37,5 @@ seata:
       password: nacos
       context-path:
       data-id: seataServer.properties
-  tx-service-group: train_group
+#  tx-service-group: train_group
 
