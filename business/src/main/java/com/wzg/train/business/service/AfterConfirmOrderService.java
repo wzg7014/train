@@ -11,7 +11,7 @@ import com.wzg.train.common.context.LoginMemberContext;
 import com.wzg.train.common.req.MemberTicketReq;
 import com.wzg.train.common.resp.CommonResp;
 import com.wzg.train.common.utils.SnowUtil;
-import io.seata.core.context.RootContext;
+//import io.seata.core.context.RootContext;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ public class AfterConfirmOrderService {
 //    @GlobalTransactional
     public void afterDoConfirm(DailyTrainTicket dailyTrainTicket, List<DailyTrainSeat> finaSeatList, List<ConfirmOrderTicketReq> tickets,
                                ConfirmOrder confirmOrder) throws Exception {
-        LOG.info("seata全局事务id:{}", RootContext.getXID());
+//        LOG.info("seata全局事务id:{}", RootContext.getXID());
         for (int j = 0; j < finaSeatList.size(); j++) {
             DailyTrainSeat dailyTrainSeat = finaSeatList.get(j);
             DailyTrainSeat seatForUpdate = new DailyTrainSeat();
