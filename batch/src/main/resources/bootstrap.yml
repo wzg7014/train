@@ -14,3 +14,24 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         namespace: train
+    #配置sentinel控制台
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 127.0.0.1:8080
+      #sentinel + nacos  将限流规则持久化到nacos
+      datasource:
+        degrade:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            namespace: train
+            group-id: DEFAULT_GROUP
+            data-id: sentinel-business-degrade
+            rule-type: degrade
+    # 下面改成true之后，启动会报注入失败，需改成懒加载
+    openfeign:
+      lazy-attributes-resolution: true
+# sentinel默认不监控sentinel，需要改成true，在簇点链路界面会显示资源
+feign:
+  sentinel:
+    enabled: true
