@@ -15,7 +15,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wzg.train.business.domain.*;
 import com.wzg.train.business.enums.ConfirmOrderStatusEnum;
-import com.wzg.train.business.enums.LockKeyPreEnum;
+import com.wzg.train.business.enums.RedisKeyPreEnum;
 import com.wzg.train.business.enums.SeatColEnum;
 import com.wzg.train.business.enums.SeatTypeEnum;
 import com.wzg.train.business.req.ConfirmOrderTicketReq;
@@ -124,7 +124,7 @@ public class ConfirmOrderService {
             throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_SK_TOKEN_FAIL);
         }
 
-        String lockKey = LockKeyPreEnum.CONFIRM_ORDER + "-" + DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
+        String lockKey = RedisKeyPreEnum.CONFIRM_ORDER + "-" + DateUtil.formatDate(req.getDate()) + "-" + req.getTrainCode();
         Boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(lockKey, lockKey, 5, TimeUnit.SECONDS);
         if (setIfAbsent) {
             LOG.info("恭喜，抢到锁了");

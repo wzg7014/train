@@ -1,13 +1,16 @@
 package com.wzg.train.business.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.wzg.train.business.enums.LockKeyPreEnum;
+import com.wzg.train.business.enums.RedisKeyPreEnum;
 import com.wzg.train.business.mapper.cust.SkTokenMapperCust;
+import com.wzg.train.common.exception.BusinessException;
+import com.wzg.train.common.exception.BusinessExceptionEnum;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.common.utils.SnowUtil;
 import com.wzg.train.business.domain.SkToken;
@@ -131,7 +134,7 @@ public class SkTokenService {
         LOG.info("会员{}获取日期{}车次{}的令牌开始", memberId, DateUtil.formatDate(date), trainCode);
 
         // 先获取令牌锁，再校验令牌余量，防止机器人抢票，lockKey就是令牌，用来表示【谁能做什么】
-        String lockKey = LockKeyPreEnum.SK_TOKEN+ "-" + DateUtil.formatDate(date) + "-" + trainCode + "-" + memberId;
+        String lockKey = RedisKeyPreEnum.SK_TOKEN+ "-" + DateUtil.formatDate(date) + "-" + trainCode + "-" + memberId;
         boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(lockKey, lockKey, 5, TimeUnit.SECONDS);
         if(Boolean.TRUE.equals(setIfAbsent)) {
             LOG.info("恭喜，抢到令牌锁了，lockKey：{}",lockKey);
@@ -140,12 +143,67 @@ public class SkTokenService {
             return false;
         }
 
-        // 令牌约等于库存，令牌没有了，就不再卖票，不需要再进入购票主流程去判断库存，判断库存令牌肯定比判断库存效率高
-        int updateCount = skTokenMapperCust.decrease(date, trainCode);
-        if (updateCount > 0){
-            return true;
+
+        String skTokenCountKey = RedisKeyPreEnum.SK_TOKEN_COUNT+ "-" +
+                DateUtil.formatDate(date) + "-" + trainCode;
+        Object skTokenCount = redisTemplate.opsForValue().get(skTokenCountKey);
+        // 缓存有直接获取令牌，否则访问数据库
+        if(ObjectUtil.isNotNull(skTokenCount)) {
+            LOG.info("缓存中有该车次的令牌大闸的key:{}", skTokenCountKey);
+            Long count = redisTemplate.opsForValue().decrement(skTokenCountKey,1);
+            //重新刷新缓存，减少过期次数，对数据库的穿透访问
+            redisTemplate.expire(skTokenCountKey,60,TimeUnit.SECONDS);
+
+            if(count < 0L){
+                LOG.info("获取令牌失败：{}",skTokenCountKey);
+                return false;
+            }else {
+                LOG.info("获取令牌后，令牌余数:{}",count);
+                // 每获取5个令牌更新一次数据库
+                if(count % 5 == 0) {
+                    LOG.info("更新数据库，令牌余数:{}",count);
+                    skTokenMapperCust.decrease(date, trainCode,5);
+                }
+                return true;
+            }
         }else {
-            return false;
+
+            LOG.info("缓存中没有该车次的令牌大闸的key:{}", skTokenCountKey);
+            // 检查是否有令牌
+            SkTokenExample skTokenExample = new SkTokenExample();
+            skTokenExample.setOrderByClause("id desc");
+            SkTokenExample.Criteria criteria = skTokenExample.createCriteria();
+            criteria.andDateEqualTo(date).andTrainCodeEqualTo(trainCode);
+            List<SkToken> tokenList = skTokenMapper.selectByExample(skTokenExample);
+
+            if(CollUtil.isEmpty(tokenList)) {
+                LOG.info("找不到日期{}车次的{}的令牌",DateUtil.formatDate(date),trainCode);
+                return false;
+            }
+
+            SkToken skToken = tokenList.get(0);
+            if(skToken.getCount() <= 0) {
+                LOG.info("日期{}车次{}的令牌余量为0",DateUtil.formatDate(date),trainCode);
+                return false;
+            }
+
+            // 令牌还有余量
+            // 令牌余数 -1
+            Integer count = skToken.getCount() - 1;
+            skToken.setCount(count);
+            LOG.info("将该车次令牌放入缓存,key：{},count：{}",skTokenCountKey,count);
+            redisTemplate.opsForValue().set(skTokenCountKey, String.valueOf(count), 60, TimeUnit.SECONDS);
+            skTokenMapper.updateByPrimaryKey(skToken);
+            return true;
+
         }
+
+//        // 令牌约等于库存，令牌没有了，就不再卖票，不需要再进入购票主流程去判断库存，判断库存令牌肯定比判断库存效率高
+//        int updateCount = skTokenMapperCust.decrease(date, trainCode);
+//        if (updateCount > 0){
+//            return true;
+//        }else {
+//            return false;
+//        }
     }
 }
