@@ -6,6 +6,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wzg.train.business.enums.LockKeyPreEnum;
 import com.wzg.train.business.mapper.cust.SkTokenMapperCust;
 import com.wzg.train.common.resp.PageResp;
 import com.wzg.train.common.utils.SnowUtil;
@@ -130,7 +131,7 @@ public class SkTokenService {
         LOG.info("会员{}获取日期{}车次{}的令牌开始", memberId, DateUtil.formatDate(date), trainCode);
 
         // 先获取令牌锁，再校验令牌余量，防止机器人抢票，lockKey就是令牌，用来表示【谁能做什么】
-        String lockKey = DateUtil.formatDate(date) + "-" + trainCode + "-" + memberId;
+        String lockKey = LockKeyPreEnum.SK_TOKEN+ "-" + DateUtil.formatDate(date) + "-" + trainCode + "-" + memberId;
         boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(lockKey, lockKey, 5, TimeUnit.SECONDS);
         if(Boolean.TRUE.equals(setIfAbsent)) {
             LOG.info("恭喜，抢到令牌锁了，lockKey：{}",lockKey);
