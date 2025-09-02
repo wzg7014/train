@@ -202,3 +202,15 @@ CREATE TABLE `undo_log`  (
                              PRIMARY KEY (`id`) USING BTREE,
                              UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2838 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+DROP TABLE IF EXISTS `sk_token`;
+CREATE TABLE `sk_token`  (
+                             `id` bigint NOT NULL COMMENT 'id',
+                             `date` date NOT NULL COMMENT '日期',
+                             `train_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '车次编号',
+                             `count` int NOT NULL COMMENT '令牌余量',
+                             `create_time` datetime(3) NULL DEFAULT NULL COMMENT '新增时间',
+                             `update_time` datetime(3) NULL DEFAULT NULL COMMENT '修改时间',
+                             PRIMARY KEY (`id`) USING BTREE,
+                             UNIQUE INDEX `date_train_code_unique`(`date`, `train_code`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '秒杀令牌' ROW_FORMAT = Dynamic;

@@ -43,6 +43,7 @@
 
         <!--        <table tableName="passenger" domainObjectName="Passenger"/>-->
 <!--        <table tableName="train_carriage" domainObjectName="TrainCarriage"/>-->
-        <table tableName="confirm_order" domainObjectName="ConfirmOrder"/>
+<!--        <table tableName="confirm_order" domainObjectName="ConfirmOrder"/>-->
+        <table tableName="sk_token" domainObjectName="SkToken"/>
     </context>
 </generatorConfiguration>
