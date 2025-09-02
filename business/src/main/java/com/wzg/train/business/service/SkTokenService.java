@@ -73,7 +73,7 @@ public class SkTokenService {
         LOG.info("车次{}站数：{}",trainCode,stationCount);
 
         //  3/4需要根据实际卖票比例来定，一趟火车最多可以卖(seatCount * stationCount) 张火车票，在一票一站情况下
-        int count = (int)(seatCount * stationCount * 3 / 4);
+        int count = (int)(seatCount * stationCount); // * 3 / 4);
         skToken.setCount(count);
 
         skTokenMapper.insert(skToken);
