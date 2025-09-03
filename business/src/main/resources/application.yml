@@ -45,6 +45,6 @@ logging:
     com.wzg.train.business.mapper: TRACE
 
 rocketmq:
-  name-server: http://localhost:9876
+  name-server: localhost:9876
   producer:
     group: default
