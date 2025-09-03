@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.wzg.train.business.domain.ConfirmOrder;
 import com.wzg.train.business.enums.ConfirmOrderStatusEnum;
 import com.wzg.train.business.enums.RedisKeyPreEnum;
+import com.wzg.train.business.enums.RocketMQTopicEnum;
 import com.wzg.train.business.mapper.ConfirmOrderMapper;
 import com.wzg.train.business.req.ConfirmOrderDoReq;
 import com.wzg.train.business.req.ConfirmOrderTicketReq;
@@ -39,6 +40,9 @@ public class BeforeConfirmOrderService {
     @Autowired
     private SkTokenService skTokenService;
 
+    @Resource
+    public RocketMQTemplate rocketMQTemplate;
+
     @SentinelResource(value = "beforeDoConfirm", blockHandler = "beforeDoConfirmBlock")
     public void beforeDoConfirm(ConfirmOrderDoReq req) {
         //校验令牌余量
@@ -62,7 +66,10 @@ public class BeforeConfirmOrderService {
             throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
         }
         // 发送MQ排队购票
-        LOG.info("准备发送MQ，等待出票");
+        String reqJson = JSON.toJSONString(req);
+        LOG.info("排队购票，发送mq开始，消息：{}", reqJson);
+        rocketMQTemplate.convertAndSend(RocketMQTopicEnum.CONFIRM_ORDER.getCode(), reqJson);
+        LOG.info("排队购票，发送mq结束");
     }
 
     /**
