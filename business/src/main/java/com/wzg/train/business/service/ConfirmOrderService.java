@@ -128,11 +128,13 @@ public class ConfirmOrderService {
         // 获取分布式锁
         String lockKey = RedisKeyPreEnum.CONFIRM_ORDER + "-" + DateUtil.formatDate(dto.getDate()) + "-" + dto.getTrainCode();
         Boolean setIfAbsent = redisTemplate.opsForValue().setIfAbsent(lockKey, lockKey, 5, TimeUnit.SECONDS);
-        if (setIfAbsent) {
+        if (Boolean.TRUE.equals(setIfAbsent)) {
             LOG.info("恭喜，抢到锁了");
         } else {
-            LOG.info("很遗憾，没有抢到锁");
-            throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
+//            LOG.info("很遗憾，没有抢到锁");
+//            throw new BusinessException(BusinessExceptionEnum.CONFIRM_ORDER_LOCK_FAIL);
+            LOG.info("没抢到锁，有其它消费线程正在出票，不做任何处理");
+            return;
         }
 
 //        RLock lock = null;
