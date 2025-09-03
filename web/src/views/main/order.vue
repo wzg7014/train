@@ -130,6 +130,13 @@
     </p>
     <a-button type="danger" block @click="validFirstImageCode">提交验证码</a-button>
   </a-modal>
+
+  <a-modal v-model:visible="lineModalVisible" title="排队购票" :footer="null" :maskClosable="false" :closable="false"
+           style="top: 50px; width: 400px">
+    <div class="book-line">
+        <loading-outlined /> 系统正在处理中...
+    </div>
+  </a-modal>
 </template>
 
 <script>
@@ -149,6 +156,7 @@ export default defineComponent({
     const SEAT_TYPE = window.SEAT_TYPE;
     console.log(SEAT_TYPE)
     const visible = ref(false);
+    const lineModalVisible = ref(false);
 
     const PASSENGER_TYPE_ARRAY = window.PASSENGER_TYPE_ARRAY;
     // 本车次提供的座位类型seatTypes，含票价，余票等信息，例：
@@ -368,7 +376,10 @@ export default defineComponent({
       }).then((response) => {
         let data = response.data;
         if (data.success) {
-          notification.success({description: "下单成功！"});
+          // notification.success({description: "下单成功！"});
+          visible.value = false;
+          imageCodeModalVisible.value = false;
+          lineModalVisible.value = true;
         } else {
           notification.error({description: data.message});
         }
@@ -460,7 +471,8 @@ export default defineComponent({
       firstImageCodeSourceA,
       firstImageCodeSourceB,
       firstImageCodeTarget,
-      firstImageCodeModalVisible
+      firstImageCodeModalVisible,
+      lineModalVisible
     }
   }
 })

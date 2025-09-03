@@ -91,7 +91,7 @@
         </hashTree>
       </hashTree>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="线程组">
-        <intProp name="ThreadGroup.num_threads">200</intProp>
+        <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -117,7 +117,7 @@
   &quot;dailyTrainTicketId&quot;:1942835065327325184,&#xd;
   &quot;date&quot;:&quot;2025-09-03&quot;,&#xd;
   &quot;end&quot;:&quot;火星&quot;,&#xd;
-  &quot;start&quot;:&quot;月球&quot;,&#xd;
+  &quot;start&quot;:&quot;太阳&quot;,&#xd;
   &quot;tickets&quot;:[{&#xd;
     &quot;passengerId&quot;:1942425214562471936,&#xd;
     &quot;passengerIdCard&quot;:&quot;54734735754546885&quot;,&#xd;
