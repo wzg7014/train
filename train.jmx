@@ -10,17 +10,17 @@
     </TestPlan>
     <hashTree>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="线程组">
-        <intProp name="ThreadGroup.num_threads">10</intProp>
+        <intProp name="ThreadGroup.num_threads">1</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器">
-          <stringProp name="LoopController.loops">10</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="会员登陆" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="会员登陆">
           <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
           <stringProp name="HTTPSampler.port">8000</stringProp>
           <stringProp name="HTTPSampler.path">/member/member/login</stringProp>
@@ -42,7 +42,7 @@
           </elementProp>
         </HTTPSamplerProxy>
         <hashTree>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
@@ -51,7 +51,7 @@
             </collectionProp>
           </HeaderManager>
           <hashTree/>
-          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="查看结果树" enabled="true">
+          <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="查看结果树">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -91,7 +91,7 @@
         </hashTree>
       </hashTree>
       <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="线程组">
-        <intProp name="ThreadGroup.num_threads">10</intProp>
+        <intProp name="ThreadGroup.num_threads">200</intProp>
         <intProp name="ThreadGroup.ramp_time">1</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
@@ -115,17 +115,19 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
   &quot;dailyTrainTicketId&quot;:1942835065327325184,&#xd;
-  &quot;date&quot;:1752422400000,&#xd;
+  &quot;date&quot;:&quot;2025-09-03&quot;,&#xd;
   &quot;end&quot;:&quot;火星&quot;,&#xd;
-  &quot;start&quot;:&quot;地球&quot;,&#xd;
+  &quot;start&quot;:&quot;月球&quot;,&#xd;
   &quot;tickets&quot;:[{&#xd;
     &quot;passengerId&quot;:1942425214562471936,&#xd;
     &quot;passengerIdCard&quot;:&quot;54734735754546885&quot;,&#xd;
     &quot;passengerName&quot;:&quot;王彰广&quot;,&#xd;
     &quot;passengerType&quot;:&quot;2&quot;,&#xd;
-    &quot;seatTypeCode&quot;:&quot;1&quot;&#xd;
+    &quot;seatTypeCode&quot;:&quot;2&quot;&#xd;
     }],&#xd;
-    &quot;trainCode&quot;:&quot;G1&quot;&#xd;
+    &quot;trainCode&quot;:&quot;G1&quot;,&#xd;
+    &quot;imageCode&quot;:&quot;123&quot;,&#xd;
+    &quot;imageCodeToken&quot;:&quot;321&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -170,7 +172,7 @@
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器" enabled="true">
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP信息头管理器">
             <collectionProp name="HeaderManager.headers">
               <elementProp name="" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
@@ -178,7 +180,7 @@
               </elementProp>
               <elementProp name="token" elementType="Header">
                 <stringProp name="Header.name">token</stringProp>
-                <stringProp name="Header.value">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3NTY3MTg1NzgsIm1vYmlsZSI6IjEzMDAwMDAwMDAwIiwiaWQiOjE5Mzk1MTkzNzM5OTU4MDY3MjAsImV4cCI6MTc1NjgwNDk3OCwiaWF0IjoxNzU2NzE4NTc4fQ.lflHuCVEDURnDbUiWu99X0VFJClunn_iEcxQqjSZ8pM</stringProp>
+                <stringProp name="Header.value">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3NTY4ODE1NzIsIm1vYmlsZSI6IjEzMDAwMDAwMDAwIiwiaWQiOjE5Mzk1MTkzNzM5OTU4MDY3MjAsImV4cCI6MTc1Njk2Nzk3MiwiaWF0IjoxNzU2ODgxNTcyfQ.tOW_sfhjiSPEYCa7ZMsa91S6JHTbya4eBmcNuxyJ4TQ</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
