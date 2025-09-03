@@ -134,7 +134,7 @@
   <a-modal v-model:visible="lineModalVisible" title="排队购票" :footer="null" :maskClosable="false" :closable="false"
            style="top: 50px; width: 400px">
     <div class="book-line">
-        <loading-outlined /> 系统正在处理中...
+        <loading-outlined />确认订单：{{confirmOrderId}} 系统正在处理中...
     </div>
   </a-modal>
 </template>
@@ -157,6 +157,7 @@ export default defineComponent({
     console.log(SEAT_TYPE)
     const visible = ref(false);
     const lineModalVisible = ref(false);
+    const confirmOrderId = ref();
 
     const PASSENGER_TYPE_ARRAY = window.PASSENGER_TYPE_ARRAY;
     // 本车次提供的座位类型seatTypes，含票价，余票等信息，例：
@@ -380,6 +381,7 @@ export default defineComponent({
           visible.value = false;
           imageCodeModalVisible.value = false;
           lineModalVisible.value = true;
+          confirmOrderId.value = data.content;
         } else {
           notification.error({description: data.message});
         }
@@ -410,6 +412,7 @@ export default defineComponent({
     const firstImageCodeSourceB = ref();
     const firstImageCodeTarget = ref();
     const firstImageCodeModalVisible = ref();
+
 
     /**
      * 加载第一层验证码
@@ -472,7 +475,8 @@ export default defineComponent({
       firstImageCodeSourceB,
       firstImageCodeTarget,
       firstImageCodeModalVisible,
-      lineModalVisible
+      lineModalVisible,
+      confirmOrderId
     }
   }
 })
