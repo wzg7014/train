@@ -35,6 +35,8 @@ public class ConfirmOrderController {
 
     @Value("${spring.profiles.active}")
     private String env;
+    @Autowired
+    private ConfirmOrderService confirmOrderService;
 
     @SentinelResource(value = "confirmOrderDo", blockHandler = "doConfirmBlock")
     @PostMapping("/do")
@@ -59,6 +61,12 @@ public class ConfirmOrderController {
 
         long id = beforeConfirmOrderService.beforeDoConfirm(req);
         return new CommonResp<>(String.valueOf(id));
+    }
+
+    @GetMapping("/query-line-count/{id}")
+    public CommonResp<Integer> queryLineCount(@PathVariable Long id) {
+        Integer count = confirmOrderService.queryLineCount(id);
+        return new CommonResp<>(count);
     }
 
     public CommonResp<Object> doConfirmBlock(ConfirmOrderDoReq confirmOrderDoReq, BlockException e) {

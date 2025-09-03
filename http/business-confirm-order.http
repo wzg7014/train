@@ -17,3 +17,7 @@ token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3NTI4MDUwOTUsIm1vYmlsZSI6
     "trainCode":"G1"
 }
 ###
+
+GET http://localhost:8000/business/confirm-order/query-line-count/1942568218879201280
+Content-Type: application/json
+token:eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE3NTY4ODE1NzIsIm1vYmlsZSI6IjEzMDAwMDAwMDAwIiwiaWQiOjE5Mzk1MTkzNzM5OTU4MDY3MjAsImV4cCI6MTc1Njk2Nzk3MiwiaWF0IjoxNzU2ODgxNTcyfQ.tOW_sfhjiSPEYCa7ZMsa91S6JHTbya4eBmcNuxyJ4TQ
