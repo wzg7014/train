@@ -61,7 +61,7 @@
   setup() {
     const PASSENGER_TYPE_ARRAY = window.PASSENGER_TYPE_ARRAY;
     const visible = ref(false);
-    const passenger = ref({
+    let passenger = ref({
       id: undefined,
       memberId: undefined,
       name: undefined,
@@ -79,30 +79,25 @@
     });
     let loading = ref(false);
     const columns = [
-    {
-      title: '会员id',
-      dataIndex: 'memberId',
-      key: 'memberId',
-    },
-    {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: '身份证',
-      dataIndex: 'idCard',
-      key: 'idCard',
-    },
-    {
-      title: '旅客类型',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: '操作',
-      dataIndex: 'operation'
-    }
+      {
+        title: '姓名',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: '身份证',
+        dataIndex: 'idCard',
+        key: 'idCard',
+      },
+      {
+        title: '旅客类型',
+        dataIndex: 'type',
+        key: 'type',
+      },
+      {
+        title: '操作',
+        dataIndex: 'operation'
+      }
     ];
 
     const onAdd = () => {
@@ -173,12 +168,11 @@
       });
     };
 
-    const handleTableChange = (page) => {
-      // console.log("看看自带的分页参数都有啥：" + JSON.stringify(page));
-      pagination.value.pageSize = page.pageSize;
+    const handleTableChange = (pagination) => {
+      // console.log("看看自带的分页参数都有啥：" + pagination);
       handleQuery({
-        page: page.current,
-        size: page.pageSize
+        page: pagination.current,
+        size: pagination.pageSize
       });
     };
 
