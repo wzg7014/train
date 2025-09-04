@@ -145,7 +145,11 @@
       pageSize: 10,
     });
     let loading = ref(false);
-    const params = ref({});
+    const params = ref({
+      date: '2025-09-09',
+      start: '地球',
+      end: '火星'
+    });
     const columns = [
       {
         title: '日期',
@@ -294,7 +298,11 @@
     };
 
     onMounted(() => {
-      params.value = SessionStorage.get(SESSION_TICKET_PARAMS) || {}
+      const savedParams = SessionStorage.get(SESSION_TICKET_PARAMS);
+      if (savedParams && Object.keys(savedParams).length > 0) {
+        params.value = savedParams;
+      }
+      // 如果有参数（无论是默认值还是保存的值），就执行查询
       if(Tool.isNotEmpty(params.value)) {
         handleQuery({
           page: 1,
