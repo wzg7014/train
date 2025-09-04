@@ -1,7 +1,7 @@
 <template>
   <p>
     <a-space>
-      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" placeholder="请选择日期"></a-date-picker>
+      <a-date-picker v-model:value="params.date" valueFormat="YYYY-MM-DD" :disabled-date="disabledDate" placeholder="请选择日期"></a-date-picker>
       <station-select-view v-model="params.start" width="200px" @change="onStart"></station-select-view>
       <station-select-view v-model="params.end" width="200px" @change="onCode"></station-select-view>
       <a-button type="primary" @click="handleQuery()">查找</a-button>
@@ -305,6 +305,11 @@
       });
     };
 
+    // 不能选择今天以前及两周以后的日期
+    const disabledDate = current => {
+      return current && (current <= dayjs().add(-1, 'day') || current > dayjs().add(14, 'day'));
+    };
+
     const calDuration = (startTime, endTime) => {
       let diff = dayjs(endTime, 'HH:mm:ss').diff(dayjs(startTime, 'HH:mm:ss'), 'seconds');
       return dayjs('00:00:00', 'HH:mm:ss').second(diff).format('HH:mm:ss');
@@ -339,7 +344,8 @@
       onStart,
       toOrder,
       showStation,
-      stations
+      stations,
+      disabledDate
     };
   },
 });
