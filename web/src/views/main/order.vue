@@ -90,6 +90,10 @@
           </div>
           <div style="color: #999999">提示：您可以选择{{tickets.length}}个座位</div>
         </div>
+        <div style="color: red">
+          体验排队购票，加入多人一起排队购票：
+          <a-input-number v-model:value="lineNumber" :min="0" :max="20" />
+        </div>
 <!--        <br/>-->
 <!--        最终购票：{{tickets}}-->
 <!--        最终选座：{{chooseSeatObj}}-->
@@ -166,6 +170,7 @@ export default defineComponent({
     const lineModalVisible = ref(false);
     const confirmOrderId = ref();
     const confirmOrderLineCount = ref(-1);
+    const lineNumber = ref(5);
 
     const PASSENGER_TYPE_ARRAY = window.PASSENGER_TYPE_ARRAY;
     // 本车次提供的座位类型seatTypes，含票价，余票等信息，例：
@@ -381,6 +386,7 @@ export default defineComponent({
         tickets: tickets.value,
         imageCodeToken: imageCodeToken.value,
         imageCode: imageCode.value,
+        lineNumber: lineNumber.value
 
       }).then((response) => {
         let data = response.data;
@@ -547,7 +553,8 @@ export default defineComponent({
       confirmOrderId,
       queryLineCount,
       confirmOrderLineCount,
-      onCancelOrder
+      onCancelOrder,
+      lineNumber
     }
   }
 })

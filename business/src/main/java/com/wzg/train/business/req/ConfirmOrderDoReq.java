@@ -70,6 +70,11 @@ public class ConfirmOrderDoReq {
      */
     private String logId;
 
+    /**
+     *加入排队人数，用于体验排队功能
+     */
+    private int lineNumber;
+
     public Long getMemberId() {
         return memberId;
     }
@@ -161,5 +166,13 @@ public class ConfirmOrderDoReq {
 
     public void setLogId(String logId) {
         this.logId = logId;
+    }
+
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
     }
 }
