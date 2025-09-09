@@ -36,3 +36,5 @@ log/
 
 ### PromptX ###
 .promptx/
+.claude/
+CLAUDE.md
