@@ -45,24 +45,24 @@
 ### 架构示意
 ```mermaid
 graph TD
-  subgraph Client[前端]
-    Web[Web 会员端 (9000)]
-    Admin[Admin 控台 (9001)]
+  subgraph Client["前端"]
+    Web["Web 会员端 (9000)"]
+    Admin["Admin 控台 (9001)"]
   end
-  Web -->|HTTP| Gateway[API Gateway (8000)]
+  Web -->|HTTP| Gateway["API Gateway (8000)"]
   Admin -->|HTTP| Gateway
 
-  Gateway --> Member[Member 服务 (8001)]
-  Gateway --> Business[Business 服务 (8002)]
-  Gateway --> Batch[Batch 服务 (8003)]
+  Gateway --> Member["Member 服务 (8001)"]
+  Gateway --> Business["Business 服务 (8002)"]
+  Gateway --> Batch["Batch 服务 (8003)"]
 
-  subgraph Infra[基础设施]
-    Nacos[Nacos 注册/配置 (namespace: train)]
-    Redis[(Redis 缓存)]
-    MySQL[(MySQL 数据库)]
-    Sentinel[Sentinel Dashboard]
-    Seata[Seata Server]
-    RocketMQ[RocketMQ]
+  subgraph Infra["基础设施"]
+    Nacos["Nacos 注册/配置 (namespace: train)"]
+    Redis[("Redis 缓存")]
+    MySQL[("MySQL 数据库")]
+    Sentinel["Sentinel Dashboard"]
+    Seata["Seata Server"]
+    RocketMQ["RocketMQ"]
   end
 
   Member --> MySQL
